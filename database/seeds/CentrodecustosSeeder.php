@@ -13,14 +13,14 @@ class CentrodecustosSeeder extends Seeder
     {
         DB::table('centrodecustos')->insert([
             'id' => 1,
-            'nome' => 'Banco Itau',
+            'nome' => 'Meu Banco',
             'descricao' => 'Conta padrão do sistema',
         ]);
 
         DB::table('centrodecustos')->insert([
             'id' => 2,
-            'nome' => 'Nu Bank',
-            'descricao' => 'Conta padrão do sistema',
+            'nome' => 'Carteira',
+            'descricao' => 'Conta padrão do sistema, indica o dinheiro que tem em mãos',
         ]);
     }
 }
