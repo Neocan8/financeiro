@@ -14,7 +14,7 @@ class CentrodecustosSeeder extends Seeder
         DB::table('centrodecustos')->insert([
             'id' => 1,
             'nome' => 'Meu Banco',
-            'descricao' => 'Conta padrão do sistema',
+            'descricao' => 'Conta padrão do sistema, voce pode mudar o nome dela a vontade',
         ]);
 
         DB::table('centrodecustos')->insert([
