@@ -17,8 +17,6 @@ Route::group(['prefix' => 'contas'], function () {
         'create' => 'contas.create',
         'index' => 'contas.index'
         ]]);
-    Route::get('entradas', 'ContaController@entradas', ['name' => 'contas.entradas']);
-    Route::get('saidas', 'ContaController@saidas')->name('contas.saidas');
     
     Route::get('transacao/{tipo}/{id}', 'ContaController@transacao')->name('contas.transacao');
     Route::post('transacao/{tipo}/{id}', 'ContaController@transacaoStore')->name('contas.transacaoStore');
@@ -27,6 +25,15 @@ Route::group(['prefix' => 'contas'], function () {
     
 });
 
+Route::resource('/entradas', 'EntradaController', ['names' => [
+    'create' => 'entrada.create',
+    'index' => 'entrada.index'
+    ]]);
+
+Route::post('/entrada/periodo', 'EntradaController@periodo')->name('entrada.periodo');
+
+Route::get('/entrada/pagar/{id}', 'EntradaController@pagar')->name('pagar'); 
+Route::get('/entrada/estornar/{id}', 'EntradaController@estornar')->name('estornar'); 
 
 
 // Route::get('centrodecustos', function () {

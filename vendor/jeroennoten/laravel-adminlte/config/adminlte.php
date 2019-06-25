@@ -116,12 +116,12 @@ return [
         ],
         [
             'text'        => 'Entradas',
-            'url'         => '\contas\entradas',
+            'url'         => '\entradas',
             'icon_color'  => 'green',
         ],
         [
             'text'        => 'Saídas',
-            'url'         => '\contas\saidas',
+            'url'         => '\saidas',
             'icon_color'  => 'red',
         ],
         'ACCOUNT SETTINGS',

@@ -110,10 +110,20 @@
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 @yield('content_header')
+                @if(Session::has('alert'))
+                <div class="alert {{session('alert.type')==='success'?'alert-success':'alert-danger'}} alert-dismissible text-center" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                    </button>
+                    <h3><i class="fa {{session('alert.type')==='success'?'fa-thumbs-o-up':'fa-thumbs-o-down'}} fa-1x"></i> {{ session('alert.message')}} </h3>
+                </div>
+                @endif
             </section>
 
             <!-- Main content -->
             <section class="content">
+                
 
                 @yield('content')
 
