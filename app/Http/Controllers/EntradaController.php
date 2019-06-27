@@ -89,7 +89,7 @@ class EntradaController extends Controller
             ];
 
             $contas = Conta::all();
-            $categorias = Categoria::all();
+            $categorias = Categoria::where('tipo','E')->get();
         return view('transacoes.io-create', compact('dadosPagina','contas','categorias'));
     }
 
