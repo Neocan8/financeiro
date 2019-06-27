@@ -22,7 +22,7 @@ class CreateEntradasTable extends Migration
             $table->text('descricao')->nullable();
             $table->float('valor');
             $table->integer('parcela')->default(1);
-            $table->integer('id_referencia');
+            $table->string('id_referencia');
             $table->boolean('confirmado')->default(false);
             $table->date('data');
             $table->timestamps();

@@ -27,11 +27,11 @@
                   <form role="form" action=" {{ route('entrada.index' )}}" method="post">
                     @csrf
                         <div class="form-row">
-                          <div class="form-group col-md-2">
+                          <div class="form-group col-md-3">
                             <label for="data">Data</label>
                           <input type="date" class="form-control" value='{{$dadosPagina['data']}}' id="data" name="data_pgt" ">
                           </div>
-                          <div class="form-group col-md-3">
+                          <div class="form-group col-md-4">
                               <label for="conta_id">Conta</label>
                               <select name="conta_id" id="conta_id" class="form-control">
                                  @foreach ($contas as $c)
@@ -40,21 +40,21 @@
                                   {/loop}
                               </select>
                             </div>
-                          <div class="form-group col-md-7">
+                          <div class="form-group col-md-5">
                             <label for="descricao">Descrição</label>
                             <input type="text" class="form-control" id="descricao" name="descricao">
                           </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-3">
                                 <label for="valor">Valor</label>
                                 <input type="number" step=".01" class="form-control"  id="valor" name="valor">
                             </div>
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-3">
                                 <label for="parcela">Parcela</label>
                                 <input type="text"  class="form-control" id="parcela" min=1 name="parcela" value=1>
                             </div>
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-3">
                                 <label for="confirmado">Pagamento já efetuado</label>
                                 <select name="confirmado" id="confirmado" class="form-control">
                                     <option value=0 > NÃO </option>

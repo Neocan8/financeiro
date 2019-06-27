@@ -102,6 +102,7 @@ class EntradaController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
+        $input['id_referencia'] = Conta::idReferencia();
         if(Entrada::create($input)) {
             $this->mensagem('success', 'Entrada Criada!');
         } else {

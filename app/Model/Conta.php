@@ -18,4 +18,11 @@ class Conta extends Model
     {
         return $this->belongsTo(Centrodecusto::class);
     }
+
+    public static function idReferencia()
+    {
+        // retorna um valor aleatório para fazer a ligação entre as parcelas de cada conta
+        // seja entrada ou saída
+        return date('Ymdhis');
+    }
 }
