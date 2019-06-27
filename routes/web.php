@@ -25,7 +25,7 @@ Route::group(['prefix' => 'contas'], function () {
     
 });
 
-Route::resource('/entradas', 'EntradaController', ['names' => [
+Route::resource('/entrada', 'EntradaController', ['names' => [
     'create' => 'entrada.create',
     'index' => 'entrada.index'
     ]]);

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Model\Entrada;
+use App\Model\Conta;
+use App\Model\Categoria;
 
 class EntradaController extends Controller
 {
@@ -54,7 +56,7 @@ class EntradaController extends Controller
             ['data', '<=', $dataFim],
             ])->get();
 
-        // Mostra os somatórios nos rodapés
+        // Mostra os somatórios nos rodapés titulos etc.
         $dadosPagina = [
             'titulo' => 'Entradas',
             'subtituloEsquerda' => 'Entradas a Receber',
@@ -78,7 +80,17 @@ class EntradaController extends Controller
      */
     public function create()
     {
-        //
+              // Mostra os somatórios nos rodapés titulos etc.
+              $dadosPagina = [
+                'titulo' => 'Nova Entrada',
+                'subtituloEsquerda' => 'Entradas a Receber',
+                'subtituloDireita' => 'Entradas Recebidas',
+                'data' => date('Y-m-d')
+            ];
+
+            $contas = Conta::all();
+            $categorias = Categoria::all();
+        return view('transacoes.io-create', compact('dadosPagina','contas','categorias'));
     }
 
     /**
@@ -89,7 +101,12 @@ class EntradaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        if(Entrada::create($input)) {
+            $this->mensagem('success', 'Entrada Criada!');
+        } else {
+            $this->mensagem('danger', 'Houve um erro ao salvar entrada');
+        }
     }
 
     /**

@@ -116,7 +116,7 @@ return [
         ],
         [
             'text'        => 'Entradas',
-            'url'         => '\entradas',
+            'url'         => '/entrada' ,
             'icon_color'  => 'green',
         ],
         [
