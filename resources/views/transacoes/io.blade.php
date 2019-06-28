@@ -62,7 +62,7 @@
                                         <td>{{ $CA->id}}</td>
                                         <td>{{ $CA->confirmado}}</td>
                                         <td>{{ date('d/m/Y', strtotime($CA->data)) }}</td>
-                                        <td><a href="/editar/{{ $CA->id }}"><b>{{ $CA->descricao }}</b></a>
+                                        <td><a href="/entrada/{{ $CA->id }}"><b>{{ $CA->descricao }}</b></a>
                                         </td>
                                         <td>{{ $CA->parcela}}</td>
                                         <td>{{ number_format($CA->valor,2,",",".") }}</td>
@@ -106,7 +106,7 @@
                                             <td>{{$CP->id}}</td>
                                             <td>{{$CP->confirmado}}</td>
                                             <td>{{ date('d/m/Y', strtotime($CP->data)) }}</td>
-                                            <td><a href="/admin/contas/editar/{{$CP->id}}"><b>{{$CP->descricao}}</b></a>
+                                            <td><b> {{$CP->descricao}}</b></a>
                                             </td>
                                             <td>{{$CP->parcela}}</td>
                                             <td>{{ number_format($CP->valor,2,",",".") }}</td>

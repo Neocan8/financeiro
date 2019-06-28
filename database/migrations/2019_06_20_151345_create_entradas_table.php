@@ -29,7 +29,7 @@ class CreateEntradasTable extends Migration
             $table->softDeletes();
 
             $table->foreign('conta_id')->references('id')->on('contas');
-            $table->foreign('categoria_id')->references('id')->on('contas');
+            $table->foreign('categoria_id')->references('id')->on('categorias');
         });
     }
 

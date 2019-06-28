@@ -29,51 +29,60 @@
                         <div class="form-row">
                           <div class="form-group col-md-3">
                             <label for="data">Data</label>
-                          <input type="date" class="form-control" value='{{$dadosPagina['data']}}' id="data" name="data">
+                          <input type="date" class="form-control" value='{{$entrada->data}}' id="data" name="data">
                           </div>
                           <div class="form-group col-md-4">
                               <label for="conta_id">Conta</label>
                               <select name="conta_id" id="conta_id" class="form-control">
                                  @foreach ($contas as $c)
-                                  <option value="{{$c->id}}">{{$c->nome}}</option>
+                                  <option value="{{$c->id}}" 
+                                    @if ($c->id == $entrada->conta_id) 
+                                      selected
+                                    @endif>
+                                  {{$c->nome}}</option>
                                  @endforeach
-                                  {/loop}
                               </select>
                             </div>
                           <div class="form-group col-md-5">
-                            <label for="descricao">Descrição</label>
-                            <input type="text" class="form-control" id="descricao" name="descricao">
+                            <label for="nome">Nome</label>
+                          <input type="text" value='{{ $entrada->nome}}' class="form-control" id="nome" name="nome">
                           </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-3">
                                 <label for="valor">Valor</label>
-                                <input type="number" step=".01" class="form-control"  id="valor" name="valor">
+                                <input type="number" step=".01" class="form-control" value='{{ $entrada->valor}}'  id="valor" name="valor">
                             </div>
                             <div class="form-group col-md-3">
-                                <label for="parcela">Parcela</label>
-                                <input type="text"  class="form-control" id="parcela" min=1 name="parcela" value=1>
+                                <label for="parcela">Qtd. Parcelas</label>
+                                <input type="text"  class="form-control" id="parcela" value='{{ $entrada->parcela}}' min=1 name="parcela" value=1>
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="confirmado">Pagamento já efetuado</label>
                                 <select name="confirmado" id="confirmado" class="form-control">
-                                    <option value=0 > NÃO </option>
-                                    <option value=1 > SIM </option>
+                                    <option value=0 @if ($entrada->confirmado == 0) selected
+                                        
+                                    @endif> NÃO </option>
+                                    <option value=1 @if ($entrada->confirmado == 0) selected
+                                        
+                                      @endif> SIM </option>
                                 </select>
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="categoria_id">Categoria</label>
                                 <select name="categoria_id" id="categoria_id" class="form-control">
                                    @foreach ($categorias as $cat)
-                                    <option value="{{$cat->id}}">{{$cat->nome}}</option>
+                                    <option value="{{$cat->id}}" @if ($entrada->categoria_id == $cat->id) selected
+                                        
+                                      @endif>{{$cat->nome}}</option>
                                    @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label for="obs">Observações:</label>
-                                <textarea name="obs" id="obs" rows=10 class="form-control"></textarea>
+                                <label for="descricao">Descrição:</label>
+                            <textarea name="descricao" id="descricao" rows=10 class="form-control"> {{$entrada->descricao}}</textarea>
                             </div>
                         </div>
                         <div class="form-row">

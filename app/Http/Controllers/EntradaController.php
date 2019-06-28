@@ -102,12 +102,16 @@ class EntradaController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
+
+        //dd($input);
         $input['id_referencia'] = Conta::idReferencia();
         if(Entrada::create($input)) {
             $this->mensagem('success', 'Entrada Criada!');
         } else {
             $this->mensagem('danger', 'Houve um erro ao salvar entrada');
         }
+
+        return redirect('/entrada');
     }
 
     /**
@@ -118,7 +122,15 @@ class EntradaController extends Controller
      */
     public function show($id)
     {
-        //
+        $entrada = Entrada::findOrfail($id);
+         // Mostra os somatórios nos rodapés titulos etc.
+         $dadosPagina = [
+            'titulo' => 'Editar Entrada',
+        ];
+        $contas = Conta::all();
+        $categorias = Categoria::where('tipo','E')->get();
+
+        return view('transacoes.io-update', compact('entrada','dadosPagina','contas','categorias'));
     }
 
     /**
