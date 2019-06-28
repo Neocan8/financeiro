@@ -24,8 +24,9 @@
                   <div class="box box-primary">
                 <!-- /.box-header -->
                 <!-- form start -->
-                  <form role="form" action=" {{ route('entrada.index' )}}" method="post">
+                  <form role="form" action="{{ route('entrada.update', $entrada->id) }}" method="POST">
                     @csrf
+                    @method('PUT')
                         <div class="form-row">
                           <div class="form-group col-md-3">
                             <label for="data">Data</label>

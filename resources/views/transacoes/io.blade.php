@@ -47,7 +47,6 @@
                             <thead>
                                 <tr>
                                     <th style="width: 10px">#</th>
-                                    <th>Pago</th>
                                     <th>Vencimento</th>
                                     <th>Conta</th>
                                     <th>Parc.</th>
@@ -60,9 +59,8 @@
                                     
                                     <tr>
                                         <td>{{ $CA->id}}</td>
-                                        <td>{{ $CA->confirmado}}</td>
                                         <td>{{ date('d/m/Y', strtotime($CA->data)) }}</td>
-                                        <td><a href="/entrada/{{ $CA->id }}"><b>{{ $CA->descricao }}</b></a>
+                                        <td><a href="{{ route('entrada.edit',$CA->id) }}"><b>{{ $CA->descricao }}</b></a>
                                         </td>
                                         <td>{{ $CA->parcela}}</td>
                                         <td>{{ number_format($CA->valor,2,",",".") }}</td>
@@ -75,7 +73,7 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    <h2>Resta Pagar: {{ number_format($dadosPagina['restaPagar'],2,",",".") }}</h2>
+                                    <h2>Resta a {{ $dadosPagina['resta'] . " R$ ".  number_format($dadosPagina['restaPagar'],2,",",".") }}</h2>
                                 </div>
                             </div>
                     </div>
@@ -91,7 +89,6 @@
                                     <thead>
                                         <tr>
                                             <th style="width: 10px">#</th>
-                                            <th>Pago</th>
                                             <th>Vencimento</th>
                                             <th>Conta</th>
                                             <th>Parc.</th>
@@ -104,27 +101,26 @@
                                         
                                         <tr>
                                             <td>{{$CP->id}}</td>
-                                            <td>{{$CP->confirmado}}</td>
                                             <td>{{ date('d/m/Y', strtotime($CP->data)) }}</td>
-                                            <td><b> {{$CP->descricao}}</b></a>
+                                            <td><a href="{{ route('entrada.edit',$CA->id) }}"><b>{{ $CA->descricao }}</b></a>
                                             </td>
                                             <td>{{$CP->parcela}}</td>
                                             <td>{{ number_format($CP->valor,2,",",".") }}</td>
                                             <td>
                                                 <a href="{{ route('estornar' , $CP->id)}}"
-                                                    class="btn btn-danger btn-xs pull-right"><i class="fa fa-arrow-left"></i>
+                                                        class="btn btn-danger btn-xs pull-right"><i class="fa fa-arrow-left"></i>
                                                     Estorno</a>
                                         </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                             </table>
-                        <h2>Total: {{ number_format($dadosPagina['totalPagas'],2,",",".") }}</h2>
+                        <h2>Total: R$ {{  number_format($dadosPagina['totalPagas'],2,",",".") }}</h2>
                     </div>
                 </div>
             </div>
             <div class="col-md-12">
-                <h5 class="alert alert-danger">Total de contas: {{ number_format($dadosPagina['totalAPagar'],2,",",".") }}</h5>
+                <h5 class="alert alert-danger">Total de {{$dadosPagina['titulo']}} {{ number_format($dadosPagina['totalAPagar'],2,",",".") }}</h5>
             </div>
         </div>
         

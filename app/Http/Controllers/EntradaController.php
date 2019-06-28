@@ -67,6 +67,7 @@ class EntradaController extends Controller
             'restaPagar' => $contasAPagar->sum('valor') - $contasPagas->sum('valor') ,
             'dataIni' =>$dataIni,
             'dataFim' =>$dataFim,
+            'resta' => ' receber'
         ];
 
 
@@ -122,15 +123,7 @@ class EntradaController extends Controller
      */
     public function show($id)
     {
-        $entrada = Entrada::findOrfail($id);
-         // Mostra os somatórios nos rodapés titulos etc.
-         $dadosPagina = [
-            'titulo' => 'Editar Entrada',
-        ];
-        $contas = Conta::all();
-        $categorias = Categoria::where('tipo','E')->get();
-
-        return view('transacoes.io-update', compact('entrada','dadosPagina','contas','categorias'));
+      die('Entrou no Método Show');
     }
 
     /**
@@ -141,7 +134,15 @@ class EntradaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $entrada = Entrada::findOrfail($id);
+        // Mostra os somatórios nos rodapés titulos etc.
+        $dadosPagina = [
+           'titulo' => 'Editar Entrada',
+       ];
+       $contas = Conta::all();
+       $categorias = Categoria::where('tipo','E')->get();
+
+       return view('transacoes.io-update', compact('entrada','dadosPagina','contas','categorias'));
     }
 
     /**
@@ -153,7 +154,7 @@ class EntradaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($id);
     }
 
     /**
@@ -179,6 +180,7 @@ class EntradaController extends Controller
         return redirect()->back();
         
     }
+
     function estornar($id) {
         $entrada = Entrada::find($id);
         if($entrada){

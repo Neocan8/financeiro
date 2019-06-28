@@ -25,26 +25,9 @@ Route::group(['prefix' => 'contas'], function () {
     
 });
 
-Route::resource('/entrada', 'EntradaController', ['names' => [
-    'create' => 'entrada.create',
-    'index' => 'entrada.index'
-    ]]);
+Route::resource('/entrada', 'EntradaController');
 
 Route::post('/entrada/periodo', 'EntradaController@periodo')->name('entrada.periodo');
 
 Route::get('/entrada/pagar/{id}', 'EntradaController@pagar')->name('pagar'); 
 Route::get('/entrada/estornar/{id}', 'EntradaController@estornar')->name('estornar'); 
-
-
-// Route::get('centrodecustos', function () {
-//     $centrodecusto = Centrodecusto::all();
-
-//     foreach ($centrodecusto as $c) {
-//         echo $c->nome;
-//         echo "<br>";
-//         foreach ($c->conta as $conta) {
-//             echo $conta->nome . "<br>";
-//         }
-//         echo "<br>";
-//     }
-// });
