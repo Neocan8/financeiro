@@ -135,14 +135,13 @@ class EntradaController extends Controller
     public function edit($id)
     {
         $entrada = Entrada::findOrfail($id);
+        $outrasParcelas =  Entrada::where('id_referencia', $entrada->id_referencia)->get(); 
         // Mostra os somatórios nos rodapés titulos etc.
-        $dadosPagina = [
-           'titulo' => 'Editar Entrada',
-       ];
-       $contas = Conta::all();
-       $categorias = Categoria::where('tipo','E')->get();
+        $dadosPagina = $this->dadosPagina();
+        $contas = Conta::all();
+        $categorias = Categoria::where('tipo','E')->get();
 
-       return view('transacoes.io-update', compact('entrada','dadosPagina','contas','categorias'));
+       return view('transacoes.io-update', compact('entrada','dadosPagina','contas','categorias', 'outrasParcelas'));
     }
 
     /**
@@ -154,7 +153,17 @@ class EntradaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($id);
+        $entrada = Entrada::find($id);
+        if(!$entrada){
+            $this->mensagem('danger', 'Entrada não encontrada!');
+            return redirect('/entrada');
+        }
+        
+        $dados = $request->all();
+        
+        $entrada->update($dados);
+        $this->mensagem('success', 'Entrada Atualizada!');
+        return redirect('/entrada');
     }
 
     /**
@@ -196,5 +205,12 @@ class EntradaController extends Controller
     public function mensagem($tipo,$texto)
     {
         session()->flash('alert', ['type' => $tipo, 'message' => $texto]);
+    }
+    public function dadosPagina()
+    {
+        return [
+            'titulo' => 'Editar Entrada',
+           'caminho' => 'Entrada'
+        ];
     }
 }

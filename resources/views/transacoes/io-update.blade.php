@@ -1,7 +1,5 @@
 @extends('adminlte::page')
-
 @section('title', 'Nova Entrada')
-
 @section('content_header')
   <div class="row">
     <div class="col-xs-12 col-md-3">
@@ -12,13 +10,11 @@
   </div>
   <ol class="breadcrumb">
     <li><a href="/home">Home</a></li>
-    <li><a href="/entrada">Entradas</a></li>
-    <li><a href="#">Criar</a></li>
+    <li><a href="/entrada">{{$dadosPagina['caminho']}}</a></li>
+    <li><a href="#">Editar</a></li>
   </ol>
-            
 @stop
 @section('content')
-       
           <div class="row">
               <div class="col-md-12">
                   <div class="box box-primary">
@@ -61,12 +57,8 @@
                             <div class="form-group col-md-3">
                                 <label for="confirmado">Pagamento já efetuado</label>
                                 <select name="confirmado" id="confirmado" class="form-control">
-                                    <option value=0 @if ($entrada->confirmado == 0) selected
-                                        
-                                    @endif> NÃO </option>
-                                    <option value=1 @if ($entrada->confirmado == 0) selected
-                                        
-                                      @endif> SIM </option>
+                                    <option value=0 @if ($entrada->confirmado == '0') selected @endif> NÃO </option>
+                                    <option value=1 @if ($entrada->confirmado == '1') selected @endif> SIM </option>
                                 </select>
                             </div>
                             <div class="form-group col-md-3">
@@ -74,7 +66,6 @@
                                 <select name="categoria_id" id="categoria_id" class="form-control">
                                    @foreach ($categorias as $cat)
                                     <option value="{{$cat->id}}" @if ($entrada->categoria_id == $cat->id) selected
-                                        
                                       @endif>{{$cat->nome}}</option>
                                    @endforeach
                                 </select>
@@ -92,13 +83,42 @@
                                 </div>
                             </div>
                   <div class="box-footer">
+                    @if (count($outrasParcelas) > 1)
+                      <div class="row">
+                          <div class="col-xs-12 col-md-6">
+                            <h3 class="box-title">Demais Parcelas</h3>
+                              <div class="table-responsive">
+                                  <table class="table table-striped table-hover">
+                                      <thead>
+                                        <th>#</th>
+                                        <th>Data</th>
+                                        <th>Parcela</th>
+                                        <th>Descrição</th>
+                                        <th>Valor</th>
+                                        <th>Pago</th>
+                                      </thead>
+                                      <tbody>
+                                            @foreach ($outrasParcelas as $p)
+                                                
+                                            <tr>
+                                            <td>{{ $loop->index + 1}}</td>
+                                              <td>{{ date('d/m/Y', strtotime($p->data)) }} </td>
+                                              <td>{{$p->parcela}} </td>
+                                              <td><a href=" {{route('entrada.update',$p->id)}}">{{$p->nome}} </a></td>
+                                              <td>{{ number_format($p->valor, 2, ',', '.') }}</td>
+                                              <td>@if($p->confirmado == 1)  SIM @else NÃO @endif </td>
+                                            </tr>
+                                            @endforeach
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+                      @endif
                   </div>
                 </form>
               </div>
               </div>
           </div>
-    
         <!-- /.content-wrapper -->
 @stop
-
-

@@ -48,7 +48,7 @@
                                 <tr>
                                     <th style="width: 10px">#</th>
                                     <th>Vencimento</th>
-                                    <th>Conta</th>
+                                    <th>{{$dadosPagina['titulo']}}</th>
                                     <th>Parc.</th>
                                     <th>Valor</th>
                                     <th>&nbsp;</th>
@@ -58,9 +58,9 @@
                                 @foreach ($contasAPagar as $CA)
                                     
                                     <tr>
-                                        <td>{{ $CA->id}}</td>
+                                        <td>{{ $CA->id }}</td>
                                         <td>{{ date('d/m/Y', strtotime($CA->data)) }}</td>
-                                        <td><a href="{{ route('entrada.edit',$CA->id) }}"><b>{{ $CA->descricao }}</b></a>
+                                        <td><a href="{{ route('entrada.edit', $CA->id) }}"><b>{{ $CA->nome }}</b></a>
                                         </td>
                                         <td>{{ $CA->parcela}}</td>
                                         <td>{{ number_format($CA->valor,2,",",".") }}</td>
@@ -90,7 +90,7 @@
                                         <tr>
                                             <th style="width: 10px">#</th>
                                             <th>Vencimento</th>
-                                            <th>Conta</th>
+                                            <th>{{ $dadosPagina['titulo'] }}</th>
                                             <th>Parc.</th>
                                             <th>Valor</th>
                                             <th>&nbsp;</th>
@@ -102,7 +102,7 @@
                                         <tr>
                                             <td>{{$CP->id}}</td>
                                             <td>{{ date('d/m/Y', strtotime($CP->data)) }}</td>
-                                            <td><a href="{{ route('entrada.edit',$CA->id) }}"><b>{{ $CA->descricao }}</b></a>
+                                            <td><a href="{{ route('entrada.edit', $CP->id) }}"><b>{{ $CP->nome }}</b></a>
                                             </td>
                                             <td>{{$CP->parcela}}</td>
                                             <td>{{ number_format($CP->valor,2,",",".") }}</td>
