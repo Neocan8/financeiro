@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CreateSaidasTable extends Migration
 {
@@ -28,7 +29,7 @@ class CreateSaidasTable extends Migration
             $table->softDeletes();
 
             $table->foreign('conta_id')->references('id')->on('contas');
-            $table->foreign('categoria_id')->references('id')->on('contas');
+            $table->foreign('categoria_id')->references('id')->on('categorias');
         });
     }
 

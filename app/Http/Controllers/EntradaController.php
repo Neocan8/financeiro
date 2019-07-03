@@ -44,7 +44,7 @@ class EntradaController extends Controller
 
         $contasPagas = DB::table('entradas')
         ->where([
-            ['confirmado', '1'],
+            ['confirmado', true],
             ['data', '>=', $dataIni],
             ['data', '<=', $dataFim],
             ])->get();
@@ -56,6 +56,9 @@ class EntradaController extends Controller
             ['data', '<=', $dataFim],
             ])->get();
 
+            //dd($contasAPagar);
+            //dd($contasAPagar->sum('valor'));
+
         // Mostra os somatórios nos rodapés titulos etc.
         $dadosPagina = [
             'titulo' => 'Entradas',
@@ -64,16 +67,18 @@ class EntradaController extends Controller
             'caminho' => 'Entradas',
             'totalAPagar' => $contasAPagar->sum('valor'),
             'totalPagas' => $contasPagas->sum('valor'),
-            'restaPagar' => $contasAPagar->sum('valor') - $contasPagas->sum('valor') ,
+            'restaPagar' => $contasAPagar->sum('valor') + $contasPagas->sum('valor') ,
             'dataIni' =>$dataIni,
             'dataFim' =>$dataFim,
-            'resta' => ' receber'
+            'resta' => ' receber',
+            'alert-rodape' => 'alert-success',
+            'rota' => 'entrada.'
         ];
-
-
+        
+        
         return view("transacoes.io", compact('contasAPagar', 'contasPagas','dadosPagina'));
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -81,19 +86,22 @@ class EntradaController extends Controller
      */
     public function create()
     {
-              // Mostra os somatórios nos rodapés titulos etc.
-              $dadosPagina = [
-                'titulo' => 'Nova Entrada',
-                'subtituloEsquerda' => 'Entradas a Receber',
-                'subtituloDireita' => 'Entradas Recebidas',
-                'data' => date('Y-m-d')
-            ];
-
-            $contas = Conta::all();
-            $categorias = Categoria::where('tipo','E')->get();
+        // Mostra os somatórios nos rodapés titulos etc.
+        $dadosPagina = [
+            'titulo' => 'Nova Entrada',
+            'caminho' => 'Entradas',
+            'caminhoUrl' => route('entrada.index'),
+            'subtituloEsquerda' => 'Entradas a Receber',
+            'subtituloDireita' => 'Entradas Recebidas',
+            'data' => date('Y-m-d'),
+            'rota' => 'entrada.'
+        ];
+        
+        $contas = Conta::all();
+        $categorias = Categoria::where('tipo','E')->get();
         return view('transacoes.io-create', compact('dadosPagina','contas','categorias'));
     }
-
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -103,13 +111,20 @@ class EntradaController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-
+        
         //dd($input);
         $input['id_referencia'] = Conta::idReferencia();
-        if(Entrada::create($input)) {
-            $this->mensagem('success', 'Entrada Criada!');
+        $novaEntrada = Entrada::create($input);
+
+        
+        if($novaEntrada) {
+            Conta::mensagem('success', 'Entrada Criada!');
+            // SE A ENTRADA JÁ FOR CONFIRMADA JÁ SOMA NO SALDO
+            if($novaEntrada->confirmado == true){
+                Conta::deposito($novaEntrada->conta_id,$novaEntrada->valor);
+            }
         } else {
-            $this->mensagem('danger', 'Houve um erro ao salvar entrada');
+            Conta::mensagem('danger', 'Houve um erro ao salvar entrada');
         }
 
         return redirect('/entrada');
@@ -134,14 +149,20 @@ class EntradaController extends Controller
      */
     public function edit($id)
     {
-        $entrada = Entrada::findOrfail($id);
-        $outrasParcelas =  Entrada::where('id_referencia', $entrada->id_referencia)->get(); 
+        $dados = Entrada::findOrfail($id);
+        $outrasParcelas =  Entrada::where('id_referencia', $dados->id_referencia)->get(); 
         // Mostra os somatórios nos rodapés titulos etc.
-        $dadosPagina = $this->dadosPagina();
+        $dadosPagina = [
+            'titulo' => 'Editar Entrada',
+            'caminho' => 'Entrada',
+            'caminhoUrl' => route('entrada.index'),
+            'rota'      => 'entrada.'
+        ];
+
         $contas = Conta::all();
         $categorias = Categoria::where('tipo','E')->get();
 
-       return view('transacoes.io-update', compact('entrada','dadosPagina','contas','categorias', 'outrasParcelas'));
+       return view('transacoes.io-update', compact('dados','dadosPagina','contas','categorias', 'outrasParcelas'));
     }
 
     /**
@@ -155,15 +176,27 @@ class EntradaController extends Controller
     {
         $entrada = Entrada::find($id);
         if(!$entrada){
-            $this->mensagem('danger', 'Entrada não encontrada!');
-            return redirect('/entrada');
+            Conta::mensagem('danger', 'Entrada não encontrada!');
+            return redirect( route('entrada.edit', $id));
         }
         
         $dados = $request->all();
-        
+        // NÃO PERMITE UPDATE EM UMA ENTRADA JÁ CONFIRMADA
+        // SEM ESSA TRAVA O USÁRIO PODE MUDAR O VALRO DA CONTA
+        // E BANGUNÇAR O SALDO.
+
+        if($entrada->confirmado == true){
+            Conta::mensagem('danger', 'Para Editar uma entrada é necessário primeiro extorná-la!');
+            return redirect( route('entrada.edit', $id));
+        }
         $entrada->update($dados);
-        $this->mensagem('success', 'Entrada Atualizada!');
-        return redirect('/entrada');
+        // ATUALIZANDO O SALDO DA CONTA
+        if($entrada->confirmado == true){
+            Conta::deposito($entrada->conta_id,$entrada->valor);
+        }
+
+        Conta::mensagem('success', 'Entrada Atualizada!');
+        return redirect( route('entrada.edit', $id));
     }
 
     /**
@@ -182,9 +215,11 @@ class EntradaController extends Controller
         if($entrada){
             $entrada->confirmado = true;
             $entrada->save();
-           $this->mensagem('success', 'Entrada paga com sucesso!');
+            // atualiza o saldo da conta
+            Conta::deposito($entrada->conta_id,$entrada->valor);
+            Conta::mensagem('success', 'Entrada recebida com sucesso!');
         } else {
-            $this->mensagem('danger', 'Entrada não encontrada!');
+            Conta::mensagem('danger', 'Entrada não encontrada!');
         }
         return redirect()->back();
         
@@ -195,22 +230,15 @@ class EntradaController extends Controller
         if($entrada){
             $entrada->confirmado = false;
             $entrada->save();
-           $this->mensagem('success', 'Entrada estornada!');
+            // atualiza o saldo da conta
+            Conta::saque($entrada->conta_id,$entrada->valor);
+           Conta::mensagem('success', 'Entrada estornada!');
         } else {
-            $this->mensagem('danger', 'Entrada não encontrada!');
+            Conta::mensagem('danger', 'Entrada não encontrada!');
         }
         return redirect()->back();
         
     }
-    public function mensagem($tipo,$texto)
-    {
-        session()->flash('alert', ['type' => $tipo, 'message' => $texto]);
-    }
-    public function dadosPagina()
-    {
-        return [
-            'titulo' => 'Editar Entrada',
-           'caminho' => 'Entrada'
-        ];
-    }
+  
+  
 }

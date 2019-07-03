@@ -3,7 +3,8 @@
 @section('title', 'Saldo')
 
 @section('content_header')
-    <h1>Saldo</h1>
+    <h1>Contas</h1>
+    <a href="{{ route("conta.create" )}}" class="btn btn-success">Criar</a>
 
     <ol class="breadcrumb">
         <li><a href="">Dashboard</a></li>
@@ -17,18 +18,14 @@
 
     <div class="row">
         @foreach ($c->conta as $conta)
-            <div class="col-xs-12 col-md-4">
+            <div class="col-xs-12 col-md-3">
                 <div class="box">
                     <div class="box-header">
                         <h4> {{ $conta->nome}}</h4>
-                        <a href="\contas\transacao\depositar\{{ $conta->id}}" class="btn btn-xs btn-primary"><i class="fa fa-cart-plus" aria-hidden="true"> Depósito</i></a>
+                        <a href=" {{ route('conta.transacao', ['tipo'=>'depositar' , 'id' => $conta->id] ) }}" class="btn btn-xs btn-primary"><i class="fa fa-cart-plus" aria-hidden="true"> Depósito</i></a>
                         
                         @if ($amount > 0)
-                        <a href="\contas\transacao\sacar\{{ $conta->id}}" class="btn btn-xs btn-danger"><i class="fa fa-cart-plus" aria-hidden="true"> Saque</i></a>
-                        @endif
-                        
-                        @if ($amount > 0)
-                        <a href="{{ route('contas.transfer') }}" class="btn btn-xs btn-info"><i class="fa fa-exchange" aria-hidden="true"> Transferir</i></a>
+                        <a href=" {{ route('conta.transacao', ['tipo' => 'sacar', 'id' => $conta->id] ) }}" class="btn btn-xs btn-danger"><i class="fa fa-cart-plus" aria-hidden="true"> Saque</i></a>
                         @endif
                     </div>
                     <div class="box-body">

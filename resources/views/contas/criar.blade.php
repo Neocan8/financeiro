@@ -7,7 +7,7 @@
 
     <ol class="breadcrumb">
         <li><a href="">Dashboard</a></li>
-        <li><a href="{{ route('contas.index')}}">Contas</a></li>
+        <li><a href="{{ route('conta.index')}}">Contas</a></li>
         <li><a href="">Criar</a></li>
     </ol>
 @stop
@@ -20,7 +20,7 @@
         <div class="box-body">    
             @include('includes.alerts')     
 
-            <form action="\contas" method="post">
+            <form action="{{ route('conta.index')}}" method="post">
                 {!! csrf_field() !!}
                 <div class="form-group">
                     <label for="">Centro de Custo</label>

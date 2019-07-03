@@ -13,12 +13,17 @@ class contasseeder extends Seeder
     {
         DB::table('contas')->insert([
             'centrodecusto_id' => 1, // conta corrente
-            'nome' => 'Conta Corrente',
+            'nome' => 'Meu Banco Conta Corrente',
             'saldo' => 0
         ]);
         DB::table('contas')->insert([
             'centrodecusto_id' => 1, // conta corrente
-            'nome' => 'Conta Poupança',
+            'nome' => 'Meu Banco Conta Poupança',
+            'saldo' => 0
+        ]);
+        DB::table('contas')->insert([
+            'centrodecusto_id' => 1, // conta corrente
+            'nome' => 'Carteira Dinheiro em mãos',
             'saldo' => 0
         ]);
     }

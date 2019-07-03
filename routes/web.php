@@ -11,23 +11,36 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['prefix' => 'contas'], function () {
+Route::group(['prefix' => 'conta'], function () {
     
     Route::resource('', 'ContaController', ['names' => [
-        'create' => 'contas.create',
-        'index' => 'contas.index'
+        'create' => 'conta.create',
+        'index' => 'conta.index'
         ]]);
     
-    Route::get('transacao/{tipo}/{id}', 'ContaController@transacao')->name('contas.transacao');
-    Route::post('transacao/{tipo}/{id}', 'ContaController@transacaoStore')->name('contas.transacaoStore');
-    Route::get('transfer', 'ContaController@transfer')->name('contas.transfer');
-    Route::get('withdraw', 'ContaController@withdraw')->name('contas.withdraw');
+    Route::get('transacao', 'ContaController@transacao')->name('conta.transacao');
+    Route::any('transacao/store', 'ContaController@transacaoStore')->name('conta.transacaoStore');
+    Route::get('transferir', 'ContaController@transferir')->name('conta.transferir');
+    Route::get('withdraw', 'ContaController@withdraw')->name('conta.withdraw');
     
 });
-
+//  ENTRADA
 Route::resource('/entrada', 'EntradaController');
-
 Route::post('/entrada/periodo', 'EntradaController@periodo')->name('entrada.periodo');
+Route::get('/entrada/pagar/{id}', 'EntradaController@pagar')->name('entrada.pagar'); 
+Route::get('/entrada/estornar/{id}', 'EntradaController@estornar')->name('entrada.estornar'); 
 
-Route::get('/entrada/pagar/{id}', 'EntradaController@pagar')->name('pagar'); 
-Route::get('/entrada/estornar/{id}', 'EntradaController@estornar')->name('estornar'); 
+//SAIDA 
+
+Route::resource('/saida', 'saidaController', ['names' => [
+    'index' => 'saida.index'
+]]);
+
+Route::post('/saida/periodo', 'saidaController@periodo')->name('saida.periodo');
+Route::get('/saida/pagar/{id}', 'saidaController@pagar')->name('saida.pagar'); 
+Route::get('/saida/estornar/{id}', 'saidaController@estornar')->name('saida.estornar'); 
+
+//TRANSFERENCIA
+
+Route::get('/transferencia', 'TransferenciaController@index')->name('transferencia.index');
+Route::post('/transferencia', 'TransferenciaController@store')->name('transferencia.store');

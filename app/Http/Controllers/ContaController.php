@@ -51,7 +51,7 @@ class ContaController extends Controller
     {
         if (Centrodecusto::find($request->input('centrodecusto_id'))) {
             Conta::create($request->all());
-            return redirect( route('contas.index'));
+            return redirect( route('conta.index'));
         } else {
             echo "Desculpe, Centro de Custo não encontrado";
             return redirect()->back();
@@ -75,8 +75,11 @@ class ContaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function transacao($tipo, $id)
+    public function transacao(Request $request)
     {
+        $tipo = $request->input('tipo');
+        $id = $request->input('id');
+
         $conta = Conta::find($id);
         if ($tipo == 'depositar') {
             $config = [
@@ -93,18 +96,25 @@ class ContaController extends Controller
         return view('contas.transacao', compact('conta', 'config'));
     }
 
-    public function transacaoStore($tipo, $id, Request $request)
+    public function transacaoStore(Request $request)
     {
+
+        $tipo = $request->input('tipo');
+        $id = $request->input('id');
+
+        
+
         // Recebe o id, via get, e o post do formulário com o valor
         $conta = Conta::find($id);
+        //dd($conta);
         if ($conta) {
             
             if ($tipo == 'depositar') {
-                $conta->saldo = $conta->saldo + $request->input('deposito');
+               Conta::deposito($conta->id, $request->input('valor')) ;
                 Log::info('Incrementado Saldo');
 
             } elseif ($tipo == 'sacar') {
-                $conta->saldo = $conta->saldo - $request->input('deposito');
+                Conta::saque($conta->id, $request->input('valor')) ;
                 Log::info('Decrementado saldo');
 
             } else {
@@ -113,7 +123,7 @@ class ContaController extends Controller
             }
 
             $conta->save();
-            return redirect('/contas');
+            return redirect(route('conta.index'));
 
         } else {
             return redirect()->back();
@@ -147,19 +157,5 @@ class ContaController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function deposito(Request $request)
-    {
-        dd($request->all());
-    }
-    public function entradas()
-    {
-        # code...
-    }
-
-    public function saidas()
-    {
-        # code...
     }
 }

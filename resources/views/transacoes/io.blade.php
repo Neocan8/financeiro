@@ -8,10 +8,10 @@
         <h1 style="margin-top: 0;">
                 {{$dadosPagina['titulo']}}                
             </h1>
-            <a href="{{ route('entrada.create')}}" class="btn btn-success">Criar</a>
+            <a href="{{ route($dadosPagina['rota'] . "create" )}}" class="btn btn-success">Criar</a>
         </div>
         <div class="col-xs-12 col-md-6">
-            <form action=" {{ route('entrada.periodo')}}"  method="POST" class="form-inline">
+            <form action=" {{ route($dadosPagina['rota'] . "periodo")}}"  method="POST" class="form-inline">
                 @csrf
                 <div class="form-group" style="margin-right: 15px;">
                     <label for="dataIni">Início</label>
@@ -60,12 +60,12 @@
                                     <tr>
                                         <td>{{ $CA->id }}</td>
                                         <td>{{ date('d/m/Y', strtotime($CA->data)) }}</td>
-                                        <td><a href="{{ route('entrada.edit', $CA->id) }}"><b>{{ $CA->nome }}</b></a>
+                                        <td><a href="{{ route($dadosPagina['rota'] . "edit", $CA->id) }}"><b>{{ $CA->nome }}</b></a>
                                         </td>
                                         <td>{{ $CA->parcela}}</td>
                                         <td>{{ number_format($CA->valor,2,",",".") }}</td>
                                         <td>
-                                            <a href="{{ route('pagar' , $CA->id)}}"
+                                            <a href="{{ route($dadosPagina['rota'] . "pagar" , $CA->id)}}"
                                                     class="btn btn-success btn-xs pull-right"><i class="fa fa-arrow-right"></i>
                                                     Pagar</a>
                                                 </td>
@@ -73,7 +73,7 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    <h2>Resta a {{ $dadosPagina['resta'] . " R$ ".  number_format($dadosPagina['restaPagar'],2,",",".") }}</h2>
+                                    <h2>Total R$ {{ number_format($dadosPagina['totalAPagar'],2,",",".") }}</h2>
                                 </div>
                             </div>
                     </div>
@@ -102,12 +102,12 @@
                                         <tr>
                                             <td>{{$CP->id}}</td>
                                             <td>{{ date('d/m/Y', strtotime($CP->data)) }}</td>
-                                            <td><a href="{{ route('entrada.edit', $CP->id) }}"><b>{{ $CP->nome }}</b></a>
+                                            <td><a href="{{ route($dadosPagina['rota'] . 'edit', $CP->id) }}"><b>{{ $CP->nome }}</b></a>
                                             </td>
                                             <td>{{$CP->parcela}}</td>
                                             <td>{{ number_format($CP->valor,2,",",".") }}</td>
                                             <td>
-                                                <a href="{{ route('estornar' , $CP->id)}}"
+                                                <a href="{{ route($dadosPagina['rota'] . "estornar" , $CP->id)}}"
                                                         class="btn btn-danger btn-xs pull-right"><i class="fa fa-arrow-left"></i>
                                                     Estorno</a>
                                         </td>
@@ -115,12 +115,12 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                        <h2>Total: R$ {{  number_format($dadosPagina['totalPagas'],2,",",".") }}</h2>
+                        <h2>Total : R$ {{  number_format($dadosPagina['totalPagas'],2,",",".") }}</h2>
                     </div>
                 </div>
             </div>
             <div class="col-md-12">
-                <h5 class="alert alert-danger">Total de {{$dadosPagina['titulo']}} {{ number_format($dadosPagina['totalAPagar'],2,",",".") }}</h5>
+            <h5 class="alert {{$dadosPagina['alert-rodape']}}">Total de {{$dadosPagina['titulo']}} {{ number_format($dadosPagina['restaPagar'],2,",",".") }}</h5>
             </div>
         </div>
         

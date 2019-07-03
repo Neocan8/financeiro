@@ -21,11 +21,11 @@
         <div class="box-body">    
             @include('includes.alerts')     
 
-            <form action="\contas\transacao\{{ $config['caminho']}}\{{ $conta->id }}" method="post">
+            <form action="{{ route('conta.transacaoStore', [ 'tipo' => $config['caminho'], 'id' =>$conta->id ] ) }}" method="post">
                 {!! csrf_field() !!}
                 <div class="form-group">
-                    <label for="deposito">Valor a para {{ $config['titulo'] }}.</label>
-                    <input type="number" name="deposito" id="deposito" class="form-control" step="0.01" min=0.01>
+                    <label for="valor">Valor a para {{ $config['titulo'] }}.</label>
+                    <input type="number" name="valor" id="valor" class="form-control" step="0.01" min=0.01>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-success" type="submit">{{ $config['titulo']}}</button>

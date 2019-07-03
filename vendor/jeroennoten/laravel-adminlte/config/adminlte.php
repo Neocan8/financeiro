@@ -97,7 +97,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Menu Items
+    | Menu Items *
     |--------------------------------------------------------------------------
     |
     | Specify your menu items to display in the left sidebar. Each menu item
@@ -105,8 +105,8 @@ return [
     | Font Awesome. A string instead of an array represents a header in sidebar
     | layout. The 'can' is a filter on Laravel's built in Gate functionality.
     |
+    
     */
-
     'menu' => [
         'MAIN NAVIGATION',
         [
@@ -115,14 +115,19 @@ return [
             'can'  => 'manage-blog',
         ],
         [
-            'text'        => 'Entradas',
-            'url'         => '/entrada' ,
+            'text'        => 'Entrada',
+            'route'         => 'entrada.index' ,
             'icon_color'  => 'green',
         ],
         [
-            'text'        => 'Saídas',
-            'url'         => '\saidas',
+            'text'        => 'Saída',
+            'route'         => 'saida.index',
             'icon_color'  => 'red',
+        ],
+        [
+            'text'        => 'Transferência',
+            'route'         => 'transferencia.index',
+            'icon_color'  => 'blue',
         ],
         'ACCOUNT SETTINGS',
         [
@@ -138,19 +143,20 @@ return [
         [
             'text'    => 'Contas',
             'icon'    => 'bank',
-            'submenu' => [
-                [
-                    'text'    => 'Ver Todas',
-                    'url'     => '/contas',
-                    'icon'    => 'eye'
-                ],
-                [
-                    'text' => 'Criar',
-                    'url'  => '/contas/create',
-                    'icon'    => 'plus'
+            'route'     => 'conta.index'
+            // 'submenu' => [
+            //     [
+            //         'text'    => 'Ver Todas',
+            //         'url'     => '/contas',
+            //         'icon'    => 'eye'
+            //     ],
+            //     [
+            //         'text' => 'Criar',
+            //         'url'  => '/contas/create',
+            //         'icon'    => 'plus'
               
-                ],
-            ],
+            //     ],
+            // ],
         ],
         'LABELS',
         [

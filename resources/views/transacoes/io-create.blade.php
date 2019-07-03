@@ -12,7 +12,7 @@
   </div>
   <ol class="breadcrumb">
     <li><a href="/home">Home</a></li>
-    <li><a href="/entrada">Entradas</a></li>
+    <li><a href="{{ $dadosPagina['caminhoUrl']}}">{{ $dadosPagina['caminho']}}</a></li>
     <li><a href="#">Criar</a></li>
   </ol>
             
@@ -24,7 +24,7 @@
                   <div class="box box-primary">
                 <!-- /.box-header -->
                 <!-- form start -->
-                  <form role="form" action=" {{ route('entrada.index' )}}" method="post">
+                  <form role="form" action=" {{ route($dadosPagina['rota'] . 'index')}}" method="post">
                     @csrf
                         <div class="form-row">
                           <div class="form-group col-md-3">
@@ -37,12 +37,11 @@
                                  @foreach ($contas as $c)
                                   <option value="{{$c->id}}">{{$c->nome}}</option>
                                  @endforeach
-                                  {/loop}
                               </select>
                             </div>
                           <div class="form-group col-md-5">
-                            <label for="descricao">Descrição</label>
-                            <input type="text" class="form-control" id="descricao" name="descricao">
+                            <label for="nome">Nome</label>
+                            <input type="text" class="form-control" id="nome" name="nome">
                           </div>
                         </div>
                         <div class="form-row">
@@ -52,7 +51,7 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="parcela">Parcela</label>
-                                <input type="text"  class="form-control" id="parcela" min=1 name="parcela" value=1>
+                                <input type="number"  class="form-control" id="parcela" min=1 name="parcela" value=1>
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="confirmado">Pagamento já efetuado</label>
