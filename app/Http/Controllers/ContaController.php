@@ -51,9 +51,10 @@ class ContaController extends Controller
     {
         if (Centrodecusto::find($request->input('centrodecusto_id'))) {
             Conta::create($request->all());
+            Conta::mensagem('success', 'Nova Conta Criada!'); 
             return redirect( route('conta.index'));
         } else {
-            echo "Desculpe, Centro de Custo não encontrado";
+            Conta::mensagem('danger', 'Houve um erro ao salvar a conta o Centro de Custo não foi encontrado!'); 
             return redirect()->back();
         }
     }

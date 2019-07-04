@@ -16,26 +16,33 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
-            <form role="form" action=" {{ route('centrodecusto.store')}}" method="post">
-                    @csrf
-                    <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label for="nome">Nome</label>
-                            <input type="text" step=".01" class="form-control"  id="nome" value="{{old('nome')}}" name="nome">
+            <div class="box-header"></div>
+            <div class="box-body">
+
+                <form role="form" action=" {{ route('centrodecusto.store')}}" method="post">
+                        @csrf
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="nome">Nome</label>
+                                <input type="text" step=".01" class="form-control"  id="nome" value="{{old('nome')}}" name="nome">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-8">
-                            <label for="descricao">Descrição:</label>
-                            <input type='text' name="descricao" value="{{ old('descricao')}}" id="descricao"  class="form-control">
+                        <div class="form-row">
+                            <div class="form-group col-md-8">
+                                <label for="descricao">Descrição:</label>
+                                <input type='text' name="descricao" value="{{ old('descricao')}}" id="descricao"  class="form-control">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-12">
-                            <input type="submit" class="btn btn-primary" value="SALVAR">
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <input type="submit" class="btn btn-primary" value="SALVAR">
+                            </div>
                         </div>
-                    </div>
-            </form>
+                    </form>
+                </div>
+                <div class="box-footer">
+                    @include('includes.alerts')
+                </div>
         </div>
     </div>
 </div>
@@ -64,11 +71,15 @@
                                     <td>{{ $C->id }}</td>
                                     <td>{{ $C->nome }}</td>
                                     <td>{{ $C->descricao}}</td>
-                                    <td></td>
+                                    <td><a href="{{ route('centrodecusto.destroy', $C->id)}}"
+                                        class="btn btn-danger btn-xs pull-right"><i class="fa fa-trash-o"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+                    {{ $centrodecustos->links() }}
                 </div>
             </div>
         </div>

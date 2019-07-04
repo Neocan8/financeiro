@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Centrodecusto;
+use App\Model\Conta;
+use Log;
 
 class CentrodecustoController extends Controller
 {
@@ -14,7 +16,7 @@ class CentrodecustoController extends Controller
      */
     public function index()
     {
-        $centrodecustos = Centrodecusto::all();
+        $centrodecustos = Centrodecusto::paginate(5);
         return view('centrodecustos.index', compact('centrodecustos'));
     }
 
@@ -36,7 +38,24 @@ class CentrodecustoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nome'      => 'required',
+            'descricao' => 'required'
+        ]);
+
+        $input = $request->all();
+
+        if (Centrodecusto::create($input)) {
+            Conta::mensagem('success', 'Nova Conta Criada!');
+            Log::debug('novo Centro de Custo salvo Usuário Autenticado: ' . auth()->user()->name . ' - '. json_encode($input));
+        } else {
+
+            // enviar email para o ADM 
+            Log::debug('Erro ao Salvar Centro de Custo Usuário Autenticado: ' . auth()->user()->name . ' - '. json_encode($input));
+            Conta::mensagem('danger', 'Houve um erro ao salvar esse centro de custo.');
+        }
+
+        return redirect()->back();
     }
 
     /**
@@ -47,7 +66,21 @@ class CentrodecustoController extends Controller
      */
     public function show($id)
     {
-        //
+        $centrodecusto = Centrodecusto::find($id);
+
+        if(count($centrodecusto->conta) > 0) {
+            Conta::mensagem('danger', 'Existe Contas relacionadas a esse centro de custos, primeiro remova as contas para depois excluír o centro de custo');
+            return redirect()->back();
+        }
+        if(!$centrodecusto) {
+            Conta::mensagem('danger', 'O centro de custo não existe');
+            return redirect()->back();
+        }
+        
+        Centrodecusto::destroy($id);
+        Conta::mensagem('success', 'Centro de custo removido');
+        
+        return redirect()->back();
     }
 
     /**
