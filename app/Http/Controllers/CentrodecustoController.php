@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\Centrodecusto;
 
 class CentrodecustoController extends Controller
 {
@@ -13,7 +14,8 @@ class CentrodecustoController extends Controller
      */
     public function index()
     {
-        //
+        $centrodecustos = Centrodecusto::all();
+        return view('centrodecustos.index', compact('centrodecustos'));
     }
 
     /**
@@ -81,17 +83,5 @@ class CentrodecustoController extends Controller
     {
         //
     }
-
-    public static function deposito($id,$deposito)
-    {
-        $centrodecusto = Centrodecusto::find($id);
-        if ($centrodecusto) {
-            $centrodecusto->saldo = $centrodecusto->saldo + $deposito;
-            $centrodecusto->save();
-
-
-        } else {
-            return redirect()->back();
-        }
-    }
+ 
 }

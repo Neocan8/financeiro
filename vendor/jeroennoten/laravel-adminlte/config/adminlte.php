@@ -141,36 +141,18 @@ return [
             'icon' => 'lock',
         ],
         [
+            'text'    => 'Centro de Custos',
+            'icon'    => 'bank',
+            'route'     => 'centrodecusto.index'
+            
+        ],
+        [
             'text'    => 'Contas',
             'icon'    => 'bank',
             'route'     => 'conta.index'
-            // 'submenu' => [
-            //     [
-            //         'text'    => 'Ver Todas',
-            //         'url'     => '/contas',
-            //         'icon'    => 'eye'
-            //     ],
-            //     [
-            //         'text' => 'Criar',
-            //         'url'  => '/contas/create',
-            //         'icon'    => 'plus'
-              
-            //     ],
-            // ],
+            
         ],
-        'LABELS',
-        [
-            'text'       => 'Important',
-            'icon_color' => 'red',
-        ],
-        [
-            'text'       => 'Warning',
-            'icon_color' => 'yellow',
-        ],
-        [
-            'text'       => 'Information',
-            'icon_color' => 'aqua',
-        ],
+        
     ],
 
     /*

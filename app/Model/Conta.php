@@ -13,6 +13,28 @@ class Conta extends Model
     protected $fillable = [
         'centrodecusto_id', 'nome', 'descricao', 'saldo',
     ];
+    
+    public function centrodecusto()
+    {
+        return $this->belongsTo(Centrodecusto::class);
+    }
+
+    public function entrada()
+    {
+        return $this->hasMany('App\Model\Entrada');
+    }
+
+    public function saida()
+    {
+        return $this->hasMany('App\Model\saida');
+    }
+
+    public function historico
+    ()
+    {
+        return $this->hasMany('App\Model\historico
+        ');
+    }
 
     public static function deposito($id,$valor)
     {
@@ -41,10 +63,7 @@ class Conta extends Model
         return true;
     }
 
-    public function Centrodecusto()
-    {
-        return $this->belongsTo(Centrodecusto::class);
-    }
+  
 
     public static function idReferencia()
     {

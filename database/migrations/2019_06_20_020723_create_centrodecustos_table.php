@@ -18,7 +18,6 @@ class CreateCentrodecustosTable extends Migration
             $table->bigIncrements('id');
             $table->string('nome');
             $table->text('descricao')->nullable();
-            $table->float('saldo')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

@@ -16,5 +16,11 @@ class CreateUserSeeder extends Seeder
             'email' => 'adminstrador@adm.com',
             'password' => bcrypt('sistema'),
         ]);
+
+        DB::table('users')->insert([
+            'name' => 'Felipe',
+            'email' => 'felipe@costacandido.com.br',
+            'password' => bcrypt('080887'),
+        ]);
     }
 }

@@ -20,56 +20,55 @@
        
           <div class="row">
               <div class="col-md-12">
-                  <div class="box box-primary">
-                <!-- /.box-header -->
-                <!-- form start -->
-                  <form role="form" action=" {{ route($dadosPagina['rota'] . 'store')}}" method="post">
-                    @csrf
+                <div class="box box-primary">
+                  <div class="box-body">
+
+                    <form role="form" action=" {{ route($dadosPagina['rota'] . 'store')}}" method="post">
+                        @csrf
                         <div class="form-row">
-             
                           <div class="form-group col-md-4">
-                              <label for="conta_id_origem">Conta Debitada</label>
-                              <select name="conta_id_origem" id="conta_id_origem" class="form-control">
-                                 @foreach ($contas as $c)
-                                  <option value="{{$c->id}}" @if(old('conta_id_origem') == $c->id) selected @endif>{{$c->nome}}</option>
-                                 @endforeach
-                              </select>
-                            </div>
-                            <div class="form-group col-md-4">
-                              <label for="conta_id_destino">Conta Debitada</label>
-                              <select name="conta_id_destino" id="conta_id_destino" class="form-control">
-                                 @foreach ($contas as $c2)
-                                  <option value="{{$c2->id}}" @if(old('conta_id_destino') == $c2->id) selected @endif>{{$c2->nome}}</option>
-                                 @endforeach
-                              </select>
-                            </div>
-                       
+                            <label for="conta_id_origem">Conta Debitada</label>
+                            <select name="conta_id_origem" id="conta_id_origem" class="form-control">
+                              @foreach ($contas as $c)
+                              <option value="{{$c->id}}" @if(old('conta_id_origem') == $c->id) selected @endif>{{$c->nome}}</option>
+                              @endforeach
+                            </select>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label for="conta_id_destino">Conta Debitada</label>
+                            <select name="conta_id_destino" id="conta_id_destino" class="form-control">
+                              @foreach ($contas as $c2)
+                              <option value="{{$c2->id}}" @if(old('conta_id_destino') == $c2->id) selected @endif>{{$c2->nome}}</option>
+                              @endforeach
+                            </select>
+                          </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="valor">Valor</label>
-                                <input type="number" step=".01" class="form-control"  id="valor" value="{{old('valor')}}" name="valor">
-                            </div>
+                          <div class="form-group col-md-4">
+                            <label for="valor">Valor</label>
+                            <input type="number" step=".01" class="form-control"  id="valor" value="{{old('valor')}}" name="valor">
+                          </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label for="obs">Observações:</label>
-                                <input type='text' name="obs" value="{{ old('obs')}}" id="obs"  class="form-control">
-                            </div>
+                          <div class="form-group col-md-12">
+                            <label for="obs">Observações:</label>
+                            <input type='text' name="obs" value="{{ old('obs')}}" id="obs"  class="form-control">
+                          </div>
                         </div>
                         <div class="form-row">
                           <div class="form-group col-md-12">
                             <input type="submit" class="btn btn-primary" value="SALVAR">
                           </div>
                         </div>
-                  <div class="box-footer">
-                    
+                        <div class="box-footer">
+                          
+                        </div>
+                      </form>
+                    </div>
+                    </div>
                   </div>
-                </form>
-              </div>
-              </div>
-          </div>
-    
+                </div>
+                
         <!-- /.content-wrapper -->
 @stop
 

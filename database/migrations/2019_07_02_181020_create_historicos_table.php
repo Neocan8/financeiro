@@ -23,7 +23,6 @@ class CreateHistoricosTable extends Migration
             $table->timestamps();
 
             $table->foreign('conta_id')->references('id')->on('contas');
-            $table->timestamps();
         });
     }
 

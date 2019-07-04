@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Conta;
-use App\Model\Transferencia;
+use App\Model\Historico;
 
 class TransferenciaController extends Controller
 {
@@ -26,7 +26,7 @@ class TransferenciaController extends Controller
         ];
         
         $contas = Conta::all();
-        $transferencias = Transferencia::where('tipo','T')->paginate(10);
+        $transferencias = Historico::where('tipo','T')->paginate(10);
         return view('transacoes.transferencia', compact('contas','dadosPagina','transferencias'));
     }
 

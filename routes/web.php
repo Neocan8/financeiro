@@ -11,6 +11,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::resource('/centrodecusto', 'CentrodecustoController');
+
 Route::group(['prefix' => 'conta'], function () {
     
     Route::resource('', 'ContaController', ['names' => [
