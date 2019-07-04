@@ -21,7 +21,7 @@
             <div class="col-xs-12 col-md-3">
                 <div class="box">
                     <div class="box-header">
-                        <h4> {{ $conta->nome}}</h4>
+                    <h4><a href="{{ route('conta.edit', $conta->id) }}"> {{ $conta->nome}}</a></h4>
                         <a href=" {{ route('conta.transacao', ['tipo'=>'depositar' , 'id' => $conta->id] ) }}" class="btn btn-xs btn-primary"><i class="fa fa-cart-plus" aria-hidden="true"> Depósito</i></a>
                         
                         @if ($amount > 0)

@@ -13,12 +13,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('/centrodecusto', 'CentrodecustoController');
 
+Route::get('/conta/:id/edit', 'ContaController@edit')->name('conta.edit');
+
+
+Route::resource('/conta', 'ContaController');
+
 Route::group(['prefix' => 'conta'], function () {
     
-    Route::resource('', 'ContaController', ['names' => [
-        'create' => 'conta.create',
-        'index' => 'conta.index'
-        ]]);
     
     Route::get('transacao', 'ContaController@transacao')->name('conta.transacao');
     Route::any('transacao/store', 'ContaController@transacaoStore')->name('conta.transacaoStore');
@@ -34,7 +35,7 @@ Route::get('/entrada/estornar/{id}', 'EntradaController@estornar')->name('entrad
 
 //SAIDA 
 
-Route::resource('/saida', 'saidaController', ['names' => [
+Route::resource('/saida', 'SaidaController', ['names' => [
     'index' => 'saida.index'
 ]]);
 

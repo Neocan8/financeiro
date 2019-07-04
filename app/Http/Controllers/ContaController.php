@@ -67,7 +67,7 @@ class ContaController extends Controller
      */
     public function show($id)
     {
-        //
+        dd('Metodo show');
     }
 
     /**
@@ -134,7 +134,8 @@ class ContaController extends Controller
     
     public function edit($id)
     {
-        //
+        dd('bateu np edit');
+        return view('contas.editar');
     }
 
     /**
