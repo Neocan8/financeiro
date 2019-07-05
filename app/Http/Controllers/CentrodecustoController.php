@@ -27,7 +27,7 @@ class CentrodecustoController extends Controller
      */
     public function create()
     {
-        //
+        return view('centrodecustos.create');
     }
 
     /**
@@ -46,7 +46,7 @@ class CentrodecustoController extends Controller
         $input = $request->all();
 
         if (Centrodecusto::create($input)) {
-            Conta::mensagem('success', 'Nova Conta Criada!');
+            Conta::mensagem('success', 'Novo Centro de Custo criado!');
             Log::debug('novo Centro de Custo salvo Usuário Autenticado: ' . auth()->user()->name . ' - '. json_encode($input));
         } else {
 
@@ -91,7 +91,9 @@ class CentrodecustoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $centrodecusto = Centrodecusto::find($id);
+
+        return view('centrodecustos.edit',compact('centrodecusto'));
     }
 
     /**

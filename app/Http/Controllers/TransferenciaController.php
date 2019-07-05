@@ -55,16 +55,16 @@ class TransferenciaController extends Controller
         Conta::deposito($contaDestino->id, $input['valor']);
 
         // registrando na conta de origem a saida da transferencia
-        Transferencia::create([
-            'descricao' =>  $contaDestino->nome,
+        Historico::create([
+            'descricao' =>  $input['obs'] .' - ' . $contaDestino->nome,
             'tipo'      =>  'T',
             'valor'     =>  $input['valor'] *-1,
             'conta_id'  =>  $contaOrigem->id 
         ]);
 
         // registrando na conta de destino a entrada da transferencia
-        Transferencia::create([
-            'descricao' =>  $contaOrigem->nome,
+        Historico::create([
+            'descricao' =>  $input['obs'] .' - ' . $contaOrigem->nome,
             'tipo'      =>  'T',
             'valor'     =>  $input['valor'],
             'conta_id'  =>  $contaDestino->id

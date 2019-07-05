@@ -20,32 +20,30 @@
         <div class="box-body">    
             @include('includes.alerts')     
 
-            <form action="{{ route('conta.update')}}" method="post">
+            <form action="{{ route('conta.update', $conta->id)}}" method="post">
                 <input type="hidden" name="_method" value="PUT">
                 {!! csrf_field() !!}
                 <div class="form-group">
                     <label for="">Centro de Custo</label>
                     <select name="centrodecusto_id" id="" class="form-control">
                         @foreach ($centrodecustos as $ct)
-                            <option value="{{ $ct->id }}">{{ $ct->nome }}</option>
+                            <option value="{{ $ct->id }}" @if ($ct->id == $conta->centrodecusto->id) selected
+                                
+                            @endif>{{ $ct->nome }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="nome">Nome</label>
-                    <input type="text" name="nome" class="form-control" placeholder="Dê um nome a sua nova conta">
-                </div>
-                <div class="form-group">
-                    <label for="">Saldo da nova conta</label>
-                    <input type="number" name="saldo" class="form-control" min=0 step="0.00">
+                <input type="text" name="nome" class="form-control"  value="{{$conta->nome}}" placeholder="Dê um nome a sua nova conta">
                 </div>
                 <div class="form-group">
                     <label for="descricao"> Descrição</label>
-                    <textarea class="form-control" name="descricao" id="descricao" cols="30" rows="10"></textarea>
+                    <textarea class="form-control" name="descricao" id="descricao" cols="30" rows="10"> {{$conta->nome}}</textarea>
                 </div>
 
                 <div class="form-group">
-                    <button class="btn btn-success" type="submit">Criar</button>
+                    <button class="btn btn-success" type="submit">Atualizar</button>
                 </div>
             </form>
         </div>

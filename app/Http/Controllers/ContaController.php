@@ -134,8 +134,10 @@ class ContaController extends Controller
     
     public function edit($id)
     {
-        dd('bateu np edit');
-        return view('contas.editar');
+        $conta = Conta::find($id);
+        $centrodecustos = Centrodecusto::all();
+        return view('contas.editar', compact('conta','centrodecustos'));
+
     }
 
     /**
@@ -147,7 +149,19 @@ class ContaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $conta = Conta::find($id);
+        if($conta){
+            $input = $request->all();
+            $conta->update($input);
+            Log::debug('Conta Atualizada Usuario Autenticado: ' . auth()->user()->name . ' - ' . json_encode($input));
+            Conta::mensagem('success', 'Conta atualizada com sucesso');
+            return redirect()->back();
+        }
+
+        Log::debug('Erro ao Atualizar conta Usuario Autenticado: ' . auth()->user()->name . ' - ' . json_encode($input));
+        Conta::mensagem('danger', 'Erro ao atualizar conta');
+        return redirect()->back();
+
     }
 
     /**

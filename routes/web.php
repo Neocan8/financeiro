@@ -13,20 +13,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('/centrodecusto', 'CentrodecustoController');
 
-Route::get('/conta/:id/edit', 'ContaController@edit')->name('conta.edit');
-
+Route::group(['prefix' => 'conta'], function () {
+    Route::get('transacao', 'ContaController@transacao')->name('conta.transacao');
+    Route::any('transacao/store', 'ContaController@transacaoStore')->name('conta.transacaoStore');
+});
 
 Route::resource('/conta', 'ContaController');
 
-Route::group(['prefix' => 'conta'], function () {
-    
-    
-    Route::get('transacao', 'ContaController@transacao')->name('conta.transacao');
-    Route::any('transacao/store', 'ContaController@transacaoStore')->name('conta.transacaoStore');
-    Route::get('transferir', 'ContaController@transferir')->name('conta.transferir');
-    Route::get('withdraw', 'ContaController@withdraw')->name('conta.withdraw');
-    
-});
 //  ENTRADA
 Route::resource('/entrada', 'EntradaController');
 Route::post('/entrada/periodo', 'EntradaController@periodo')->name('entrada.periodo');

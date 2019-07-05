@@ -4,6 +4,7 @@
 
 @section('content_header')
     <h1>Efetuar {{$config['titulo']}}</h1>
+    <h3>Saldo: {{$conta->saldo}}</h3>
     <h4>{{$conta->centrodecusto->nome . " | " . $conta->nome}}</h4>
 
     <ol class="breadcrumb">
