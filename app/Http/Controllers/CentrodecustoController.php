@@ -47,7 +47,17 @@ class CentrodecustoController extends Controller
 
         if (Centrodecusto::create($input)) {
             Conta::mensagem('success', 'Novo Centro de Custo criado!');
-            Log::debug('novo Centro de Custo salvo Usuário Autenticado: ' . auth()->user()->name . ' - '. json_encode($input));
+            $mensagem = 'novo Centro de Custo salvo Usuário Autenticado: ' . auth()->user()->name . ' - '. json_encode($input);
+            
+            Mail::send('mail.alerta', ['mensagem' => $mensagem], function ($message) {
+                $message->from('financeiro@costacandido.com.br', 'Sistema Financeiro');
+                $message->to('felipe.candido8@gmail.com', 'Felipe Cândido');
+            });
+            
+
+     
+            
+            Log::debug($mensagem);
         } else {
 
             // enviar email para o ADM 
