@@ -28,7 +28,7 @@
                                 <th style="width: 10px">#</th>
                                 <th>Nome</th>
                                 <th>Email</th>
-                                <th>&nbsp;</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,9 +36,11 @@
                                 
                                 <tr>
                                     <td>{{ $L->id }}</td>
-                                    <td><a href="{{route( $dadosPagina['rota']' . edit', $L->id)}}">{{ $L->nome}}</a></td>
+                                    <td>{{ $L->name}}</a></td>
                                     <td>{{ $L->email }}</td>
-                                    <td><a href="{{ route( $dadosPagina['rota']' . destroy', $L->id)}}"
+                                    <td><a href="{{route( $dadosPagina['rota'] . 'edit', $L->id)}}" class="btn btn-warning btn-xs pull-right"> <i class="fa fa-trash-o"></i>
+                                    </a>
+                                        <a href="{{ route( $dadosPagina['rota'] . 'destroy', $L->id)}}"
                                         class="btn btn-danger btn-xs pull-right"><i class="fa fa-trash-o"></i>
                                         </a>
                                     </td>
@@ -46,7 +48,6 @@
                             @endforeach
                         </tbody>
                     </table>
-                    {{ $lista->links() }}
                 </div>
             </div>
         </div>
