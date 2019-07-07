@@ -3,11 +3,17 @@
 use App\Model\Centrodecusto;
 use App\Model\Conta;
 
+Auth::routes();
+
 Route::get('/', function () {
-    return view('welcome');
+    $b = 50;
+    $a = $b > 100 ?? 'Não é maior que zero';
+
+    dd($a);
+    return redirect('/login');
+    //return view('welcome');
 });
 
-Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -40,3 +46,6 @@ Route::get('/saida/estornar/{id}', 'saidaController@estornar')->name('saida.esto
 
 Route::get('/transferencia', 'TransferenciaController@index')->name('transferencia.index');
 Route::post('/transferencia', 'TransferenciaController@store')->name('transferencia.store');
+
+//USUARIOS
+Route::resource('user', 'UserController');

@@ -4,8 +4,8 @@ return [
 
     'full_name'                   => 'Nome completo',
     'email'                       => 'Email',
-    'password'                    => 'Senha Antiga',
-    'retype_password'             => 'Nova senha',
+    'password'                    => 'Senha',
+    'retype_password'             => 'Repita a senha',
     'remember_me'                 => 'Lembrar-me',
     'register'                    => 'Registrar',
     'register_a_new_membership'   => 'Registrar um novo membro',

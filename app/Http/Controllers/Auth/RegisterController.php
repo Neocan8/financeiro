@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
+   
     /*
     |--------------------------------------------------------------------------
     | Register Controller
@@ -37,7 +38,8 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('auth');
+        //$this->middleware('guest');
     }
 
     /**

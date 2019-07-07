@@ -131,8 +131,8 @@ return [
         ],
         'ACCOUNT SETTINGS',
         [
-            'text' => 'Profile',
-            'url'  => 'admin/settings',
+            'text' => 'Perfil',
+            'route'  => 'usuario.edit',
             'icon' => 'user',
         ],
         [
