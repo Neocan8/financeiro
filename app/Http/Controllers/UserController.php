@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Model\Conta;
+use Log;
 
 class UserController extends Controller
 {
@@ -40,7 +42,27 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validator([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:4', 'confirmed'],
+            ]);
+            
+        $request = $request->all();
+
+        $criado =  User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+        ]);
+
+        if($criado){
+            Conta::mensagem('success', 'Usuário Criado!');
+        } else {
+            Conta::mensagem('danger', 'Erro ao Criar usuário!');
+        }
+
+        return  redirect(route('user.index'));
     }
 
     /**
