@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\User;
 
 class UserController extends Controller
 {
@@ -13,7 +14,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $lista = User::all();
+        $dadosPagina = [
+            'titulo'    => 'Usuários',
+            'rota'      => 'user',
+        ];
+        return view('usuarios.index', compact('lista','dadosPagina'));
     }
 
     /**

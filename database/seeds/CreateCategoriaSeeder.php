@@ -12,6 +12,10 @@ class CreateCategoriaSeeder extends Seeder
     public function run()
     {
         DB::table('categorias')->insert([
+            'nome' => 'Gastos Diversos',
+            'tipo' => 'S'
+        ]);
+        DB::table('categorias')->insert([
             'nome' => 'Alimentação',
             'tipo' => 'S'
         ]);

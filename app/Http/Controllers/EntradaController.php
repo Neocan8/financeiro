@@ -102,6 +102,23 @@ class EntradaController extends Controller
         return view('transacoes.io-create', compact('dadosPagina','contas','categorias'));
     }
     
+    public function rapida()
+    {
+        // Mostra os somatórios nos rodapés titulos etc.
+        $dadosPagina = [
+            'titulo' => 'Nova Entrada',
+            'caminho' => 'Entradas',
+            'caminhoUrl' => route('entrada.index'),
+            'subtituloEsquerda' => 'Entradas a Receber',
+            'subtituloDireita' => 'Entradas Recebidas',
+            'data' => date('Y-m-d'),
+            'rota' => 'entrada.'
+        ];
+        
+        $contas = Conta::all();
+        $categorias = Categoria::where('tipo','E')->get();
+        return view('transacoes.io-create', compact('dadosPagina','contas','categorias'));
+    }
     /**
      * Store a newly created resource in storage.
      *

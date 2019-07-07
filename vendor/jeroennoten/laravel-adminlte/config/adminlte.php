@@ -132,7 +132,7 @@ return [
         'ACCOUNT SETTINGS',
         [
             'text' => 'Perfil',
-            'route'  => 'usuario.edit',
+            'route'  => 'user.index',
             'icon' => 'user',
         ],
         [

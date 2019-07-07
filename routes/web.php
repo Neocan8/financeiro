@@ -6,10 +6,6 @@ use App\Model\Conta;
 Auth::routes();
 
 Route::get('/', function () {
-    $b = 50;
-    $a = $b > 100 ?? 'Não é maior que zero';
-
-    dd($a);
     return redirect('/login');
     //return view('welcome');
 });
@@ -31,6 +27,7 @@ Route::resource('/entrada', 'EntradaController');
 Route::post('/entrada/periodo', 'EntradaController@periodo')->name('entrada.periodo');
 Route::get('/entrada/pagar/{id}', 'EntradaController@pagar')->name('entrada.pagar'); 
 Route::get('/entrada/estornar/{id}', 'EntradaController@estornar')->name('entrada.estornar'); 
+Route::get('/entrada/rapida', 'EntradaController@rapida')->name('entrada.rapida'); 
 
 //SAIDA 
 
@@ -39,6 +36,7 @@ Route::resource('/saida', 'SaidaController', ['names' => [
 ]]);
 
 Route::post('/saida/periodo', 'saidaController@periodo')->name('saida.periodo');
+Route::get('/saida/rapida', 'saidaController@rapida')->name('saida.rapida'); 
 Route::get('/saida/pagar/{id}', 'saidaController@pagar')->name('saida.pagar'); 
 Route::get('/saida/estornar/{id}', 'saidaController@estornar')->name('saida.estornar'); 
 
