@@ -39,9 +39,11 @@
                                     <td>{{ $L->email }}</td>
                                     <td><a href="{{route( $dadosPagina['rota'] . 'edit', $L->id)}}" class="btn btn-warning btn-xs pull-right"> <i class="fa fa-trash-o"></i>
                                     </a>
-                                        <a href="{{ route( $dadosPagina['rota'] . 'destroy', $L->id)}}"
-                                        class="btn btn-danger btn-xs pull-right"><i class="fa fa-trash-o"></i>
-                                        </a>
+                                    <form action="{{ route( $dadosPagina['rota'] . 'destroy', $L->id)}}" method="post">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button class="btn btn-danger btn-xs pull-right"><i class="fa fa-trash-o"></i> </button>
+                                    </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -61,7 +63,7 @@
                     <form action="{{ route('user.store')  }}" method="post">
                         {!! csrf_field() !!}
                         <div class="form-group has-feedback {{ $errors->has('name') ? 'has-error' : '' }}">
-                            <input type="text" name="name" class="form-control" value="{{ Auth::user()->name }}"
+                            <input type="text" name="name" class="form-control" value="{{ $user['name'] }}"
                                     placeholder="{{ trans('adminlte::adminlte.full_name') }}">
                             <span class="glyphicon glyphicon-user form-control-feedback"></span>
                             @if ($errors->has('name'))
@@ -71,7 +73,7 @@
                             @endif
                         </div>
                         <div class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
-                            <input type="email" name="email" class="form-control" value="{{ Auth::user()->email }}"
+                            <input type="email" name="email" class="form-control" value="{{ $user['email'] }}"
                                     placeholder="{{ trans('adminlte::adminlte.email') }}">
                             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                             @if ($errors->has('email'))

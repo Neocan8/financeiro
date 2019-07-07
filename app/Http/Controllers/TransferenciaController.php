@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Conta;
 use App\Model\Historico;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TransferenciaController extends Controller
 {
+    use SoftDeletes;
     /**
      * Display a listing of the resource.
      *

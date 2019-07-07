@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\Model\Conta;
 use Log;
+//use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserController extends Controller
 {
+    //use SoftDeletes;
     /**
      * Display a listing of the resource.
      *
@@ -17,11 +20,16 @@ class UserController extends Controller
     public function index()
     {
         $lista = User::all();
+        $user = [
+            'name'  => '',
+            'email'  => '',
+        ];
+
         $dadosPagina = [
             'titulo'    => 'Usuários',
             'rota'      => 'user.',
         ];
-        return view('usuarios.index', compact('lista','dadosPagina'));
+        return view('usuarios.index', compact('lista','dadosPagina','user'));
     }
 
     /**
@@ -42,7 +50,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validator([
+        $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:4', 'confirmed'],
@@ -73,7 +81,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        echo "Metodo show";
     }
 
     /**
@@ -107,6 +115,13 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if ($id == 1) {
+            Conta::mensagem('danger','Desculpe o usuário de ID 1, não pode ser removido, Você pode renomeá-lo e mudar sua senha.');
+            return redirect()->back();
+        }
+        $usuario = User::findOrFail($id);
+        $usuario->delete();
+        Conta::mensagem("success",'Usuário Excluído');
+        return redirect()->back();
     }
 }

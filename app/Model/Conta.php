@@ -29,11 +29,9 @@ class Conta extends Model
         return $this->hasMany('App\Model\saida');
     }
 
-    public function historico
-    ()
+    public function historico()
     {
-        return $this->hasMany('App\Model\historico
-        ');
+        return $this->hasMany('App\Model\historico');
     }
 
     public static function deposito($id,$valor)
