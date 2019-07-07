@@ -47,6 +47,3 @@ Route::post('/transferencia', 'TransferenciaController@store')->name('transferen
 
 //USUARIOS
 Route::resource('user', 'UserController');
-
-//REGISTRO NOO USUARIO
-Route::post('/registro', 'RegisterController@');
