@@ -35,11 +35,11 @@
                                 
                                 <tr>
                                     <td>{{ $L->id }}</td>
-                                    <td>{{ $L->name}}</a></td>
-                                    <td>{{ $L->email }}</td>
-                                    <td><a href="{{ route('user.edit', $L->id)}}" class="btn btn-warning btn-xs pull-right"> <i class="fa fa-edit"></i>
+                                    <td>{{ $L->nome}}</a></td>
+                                    <td> @if ($L->tipo == 'E') Entrada @else Saída @endif </td>
+                                    <td><a href="{{ route('categoria.edit', $L->id)}}" class="btn btn-warning btn-xs pull-right"> <i class="fa fa-edit"></i>
                                     </a>
-                                    <form action="{{ route('user.destroy', $L->id)}}" method="post">
+                                    <form action="{{ route('categoria.destroy', $L->id)}}" method="post">
                                         @method('DELETE')
                                         @csrf
                                         <button class="btn btn-danger btn-xs pull-right"><i class="fa fa-trash-o"></i> </button>
@@ -52,6 +52,6 @@
                 </div>
             </div>
         </div>
-   @include($dadosPagina['form']);
+   @include($dadosPagina['form'])
     </div>
 @stop

@@ -48,3 +48,7 @@ Route::post('/transferencia', 'TransferenciaController@store')->name('transferen
 //USUARIOS
 Route::resource('user', 'UserController');
 Route::post('user/delete', 'UserController@destroy')->name('user.deletar');
+
+//CATEGORIAS
+
+Route::resource('categoria', 'CategoriaController');

@@ -12,6 +12,7 @@ use Log;
 class UserController extends Controller
 {
     //use SoftDeletes;
+ 
     /**
      * Display a listing of the resource.
      *
@@ -20,16 +21,11 @@ class UserController extends Controller
     public function index()
     {
         $lista = User::all();
-        $user = [
-            'name'  => '',
-            'email'  => '',
-        ];
-
         $dadosPagina = [
             'titulo'    => 'Usuários',
-            'rota'      => 'user.',
+            'form'      => 'usuarios.form-create'
         ];
-        return view('usuarios.index', compact('lista','dadosPagina','user'));
+        return view('usuarios.index', compact('lista','dadosPagina'));
     }
 
     /**
@@ -92,7 +88,15 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        return view('usuarios.update');
+        $lista = User::all();
+        $user = User::findOrFail($id);
+
+        $dadosPagina = [
+            'titulo'    => 'Editar Usuário: ' . $user->name,
+            'form'      => 'usuarios.form-update'
+        ];
+
+        return view('usuarios.index', compact('lista','dadosPagina','user'));
     }
 
     /**
@@ -104,7 +108,23 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        // SE HOUVE TROCA DE EMAIL O SISTEMA VERIFICA SE EXISTE OUTRO IGUAL
+        if ($user->email != $request->email) {
+            $request->validate([
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                ]);
+            }
+
+            $request->validate([
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
+            'password' => ['required', 'string', 'min:4', 'confirmed'],
+            ]);
+        $input = $request->all();
+        $input['password'] = bcrypt($input['password']);
+        $user->update($input);
+            return redirect()->back();
     }
 
     /**
@@ -117,6 +137,11 @@ class UserController extends Controller
     {
         if ($id == 1) {
             Conta::mensagem('danger','Desculpe o usuário de ID 1, não pode ser removido, Você pode renomeá-lo e mudar sua senha.');
+            return redirect()->back();
+        }
+
+        if ($id == auth()->user()->id)  {
+            Conta::mensagem('danger','Desculpe para remover o usuário logado é necessário sair dessa conta e entrar com outra conta!');
             return redirect()->back();
         }
         $usuario = User::findOrFail($id);

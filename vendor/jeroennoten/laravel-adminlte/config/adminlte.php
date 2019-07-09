@@ -131,7 +131,7 @@ return [
         ],
         'ACCOUNT SETTINGS',
         [
-            'text' => 'Perfil',
+            'text' => 'Usuários',
             'route'  => 'user.index',
             'icon' => 'user',
         ],
@@ -150,6 +150,12 @@ return [
             'text'    => 'Contas',
             'icon'    => 'bank',
             'route'     => 'conta.index'
+            
+        ],
+        [
+            'text'    => 'Categorias',
+            'icon'    => 'bank',
+            'route'     => 'categoria.index'
             
         ],
         
