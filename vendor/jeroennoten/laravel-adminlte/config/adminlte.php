@@ -115,6 +115,11 @@ return [
             'can'  => 'manage-blog',
         ],
         [
+            'text'        => 'Inicio',
+            'url'         => '/home' ,
+            'icon_color'  => 'purple',
+        ],
+        [
             'text'        => 'Entrada',
             'route'         => 'entrada.index' ,
             'icon_color'  => 'green',
@@ -134,11 +139,6 @@ return [
             'text' => 'Usuários',
             'route'  => 'user.index',
             'icon' => 'user',
-        ],
-        [
-            'text' => 'Change Password',
-            'url'  => 'admin/settings',
-            'icon' => 'lock',
         ],
         [
             'text'    => 'Centro de Custos',

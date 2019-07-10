@@ -1,6 +1,7 @@
 <?php
-
+use Illuminate\Support\Facades\Mail;
 use App\Model\Centrodecusto;
+use App\Mail\EnviaAvisoDev;
 use App\Model\Conta;
 
 Auth::routes();
@@ -52,3 +53,10 @@ Route::post('user/delete', 'UserController@destroy')->name('user.deletar');
 //CATEGORIAS
 
 Route::resource('categoria', 'CategoriaController');
+
+
+Route::get('/mail', function () {
+    
+ 
+    return new EnviaAvisoDev(['Teste']);
+});
