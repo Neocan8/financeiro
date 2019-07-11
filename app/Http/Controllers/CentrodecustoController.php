@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EnviaAvisoDev;
 use Illuminate\Http\Request;
 use App\Model\Centrodecusto;
 use App\Model\Conta;
@@ -51,9 +53,9 @@ class CentrodecustoController extends Controller
 
         if (Centrodecusto::create($input)) {
             Conta::mensagem('success', 'Novo Centro de Custo criado!');
-            $mensagem = 'novo Centro de Custo salvo Usuário Autenticado: ' . auth()->user()->name . ' - '. json_encode($input);
+            $mensagem = "Novo Cadastro de Centro de Custo ID: " .  $input["id"] . " Nome: " . $input["nome"] . " # Usuário Autenticado: " . auth()->user()->name;
             
-            Mail::send('mail.alerta', ['mensagem' => $mensagem], function ($message) {
+            Mail::send('mail.aviso', ['mensagem' => $mensagem], function ($message) {
                 $message->from('financeiro@costacandido.com.br', 'Sistema Financeiro');
                 $message->to('felipe.candido8@gmail.com', 'Felipe Cândido');
             });

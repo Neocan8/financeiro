@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\EnviaAvisoDev;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\Model\Conta;
@@ -63,7 +63,7 @@ class UserController extends Controller
 
         if($criado){
             Conta::mensagem('success', 'Usuário Criado!');
-            Mail::to('felipe.candido8@gmail.com')->send(new EnviaAvisoDev("Novo Usuário Cadastrado."));
+            Mail::to('financeiro@costacandido.com.br')->send(new EnviaAvisoDev("Novo Usuário Cadastrado."));
         } else {
             Conta::mensagem('danger', 'Erro ao Criar usuário!');
         }

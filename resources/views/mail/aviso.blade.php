@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="alert">
-                <p>{{ $mensagem['mensagem'] }}</p>
+                <p>{{$mensagem}}</p>
                 </div>
             </div>
         </div>

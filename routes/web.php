@@ -2,6 +2,7 @@
 use Illuminate\Support\Facades\Mail;
 use App\Model\Centrodecusto;
 use App\Mail\EnviaAvisoDev;
+use App\Mail\SendMailUser;
 use App\Model\Conta;
 
 Auth::routes();
@@ -57,6 +58,6 @@ Route::resource('categoria', 'CategoriaController');
 
 Route::get('/mail', function () {
     
- 
-    return new EnviaAvisoDev(['Teste']);
+    Mail::to('felipe.candido8@gmail.com')->send(new EnviaAvisoDev('Testando o passe de variável'));
+    
 });
