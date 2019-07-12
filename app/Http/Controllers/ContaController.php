@@ -7,6 +7,7 @@ use App\Model\Conta;
 use App\Model\Centrodecusto;
 use Illuminate\Support\Facades\Log;
 
+
 class ContaController extends Controller
 {
 
@@ -172,6 +173,17 @@ class ContaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $conta = Conta::find($id);
+        if(!$conta){
+            Conta::mensagem('danger','Conta não encontrada');
+            return redirect()->back();
+        }
+
+
+        if($conta->delete()) {
+            Conta::mensagem('success', 'Conta excluída com sucesso, as entradas e saídas vinculadas a ela deveram ser migradas pelo usuário no momento do pagamento ou recebimento!');
+            return redirect(route('conta.index'));
+        }
+       
     }
 }

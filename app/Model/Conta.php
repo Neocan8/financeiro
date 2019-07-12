@@ -4,12 +4,14 @@ namespace App\Model;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\database\Eloquent\SoftDeletes;
 use App\Model\Centrodecusto;
 use Log;
 
 class Conta extends Model
 {
     use Notifiable;
+    use SoftDeletes;
 
     protected $fillable = [
         'centrodecusto_id', 'nome', 'descricao', 'saldo',
