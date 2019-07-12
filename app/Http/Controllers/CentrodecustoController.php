@@ -53,21 +53,22 @@ class CentrodecustoController extends Controller
 
         if (Centrodecusto::create($input)) {
             Conta::mensagem('success', 'Novo Centro de Custo criado!');
-            $mensagem = "Novo Cadastro de Centro de Custo ID: " .  $input["id"] . " Nome: " . $input["nome"] . " # Usuário Autenticado: " . auth()->user()->name;
-            
-            Mail::send('mail.aviso', ['mensagem' => $mensagem], function ($message) {
-                $message->from('financeiro@costacandido.com.br', 'Sistema Financeiro');
-                $message->to('felipe.candido8@gmail.com', 'Felipe Cândido');
-            });
-            
 
+            //$mensagem = "Novo Cadastro de Centro de Custo ID: " .  $input["id"] . " Nome: " . $input["nome"] . " # Usuário Autenticado: " . auth()->user()->name;
+            
+            // Mail::send('mail.aviso', ['mensagem' => $mensagem], function ($message) {
+            //     $message->from('financeiro@costacandido.com.br', 'Sistema Financeiro');
+            //     $message->to('felipe.candido8@gmail.com', 'Felipe Cândido');
+            // });
+            
+               
      
             
-            Log::debug($mensagem);
+            
         } else {
 
             // enviar email para o ADM 
-            Log::debug('Erro ao Salvar Centro de Custo Usuário Autenticado: ' . auth()->user()->name . ' - '. json_encode($input));
+            Log::error('Erro ao Salvar Centro de Custo Usuário Autenticado: ' . auth()->user()->name . ' - '. json_encode($input));
             Conta::mensagem('danger', 'Houve um erro ao salvar esse centro de custo.');
         }
 
@@ -132,7 +133,22 @@ class CentrodecustoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $centrodecusto = Centrodecusto::find($id);
+        if(!$centrodecusto){
+            Conta::mensagem('danger','Centro de custos não encontrado');
+            return redirect()->back();
+        }
+
+        $contas = Conta::where('centrodecusto_id', $id);
+        dd($contas);
+        if (count($contas) > 0) {
+            Conta::mensagem('danger','Existem contas vinculadas a esse centro de custo, exclua primeiro as contas vinculadas');
+            return redirect()->back();
+        } else {
+           echo "deletando...";
+        }
+        
+
     }
  
 }

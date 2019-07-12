@@ -3,8 +3,7 @@
 @section('title', 'AdminLTE')
 
 @section('content_header')
-<h1>Criar Centro de Custos</h1>
-<a href="{{ route("centrodecusto.create" )}}" class="btn btn-success">Criar</a>
+<h1>Editar Centro de Custos {{$centrodecusto->nome}}</h1>
 
 <ol class="breadcrumb">
     <li><a href="/">Home</a></li>
@@ -17,7 +16,13 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
-            <div class="box-header"></div>
+            <div class="box-header">
+                    <form action="{{ route('centrodecusto.destroy', $centrodecusto->id)}}" method="POST">
+                        @csrf
+                        @method("DELETE")
+                        <input type="submit" class="btn btn-danger" value="Excluir">
+                    </form>
+            </div>
             <div class="box-body">
 
                 <form role="form" action=" {{ route('centrodecusto.edit',$centrodecusto->id)}}" method="post">

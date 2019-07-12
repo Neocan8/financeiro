@@ -5,6 +5,7 @@ namespace App\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use App\Model\Centrodecusto;
+use Log;
 
 class Conta extends Model
 {
@@ -102,5 +103,14 @@ class Conta extends Model
     public static function mensagem($tipo,$texto)
     {
         session()->flash('alert', ['type' => $tipo, 'message' => $texto]);
+    }
+
+    public static function registra($acao,$tabela,$dadosAntigos,$dadosNovos = null)
+    {
+        $mensagem = "
+        Usuário Logado: " . auth()->user()->id ."-". auth()->user()->name . "  | Ação: $acao | Tabela: $tabela | Dados Antigos:"
+         . json_encode($dadosAntigos) . " | Dados Novos: " . json_encode($dadosNovos);
+        
+        Log::info($mensagem);
     }
 }

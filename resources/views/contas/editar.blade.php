@@ -3,7 +3,7 @@
 @section('title', 'Home Dashboard')
 
 @section('content_header')
-    <h1>Nova Conta</h1>
+    <h3>Editar Conta {{$conta->nome}}</h3>
 
     <ol class="breadcrumb">
         <li><a href="">Dashboard</a></li>
@@ -15,7 +15,11 @@
 @section('content')
 <div class="box">
         <div class="box-header">
-        <h3>Editar Conta {{$conta->nome}}</h3>
+        <form action="{{ route('conta.destroy', $conta->id)}}" method="POST">
+            @csrf
+            @method("DELETE")
+            <input type="submit" class="btn btn-danger" value="Excluir Conta">
+        </form>
         </div>
         <div class="box-body">    
             @include('includes.alerts')     

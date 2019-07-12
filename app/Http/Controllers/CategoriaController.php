@@ -105,13 +105,14 @@ class CategoriaController extends Controller
     {
         $categoria = Categoria::findOrFail($id);
         // SE HOUVE TROCA DE tipo O SISTEMA VERIFICA SE EXISTE OUTRO IGUAL
-       
+        
 
             $request->validate([
             'tipo' => ['required', 'string'],
             'nome' => ['required', 'string', 'max:255'],
             ]);
         $input = $request->all();
+        
         $categoria->update($input);
             return redirect()->back();
     }
@@ -126,6 +127,7 @@ class CategoriaController extends Controller
     {
        
         $categoria = Categoria::findOrFail($id);
+        Conta::registra("DELETE","categorias", $categoria);
         $categoria->delete();
         Conta::mensagem("success",'categoria Excluída');
         return redirect()->back();

@@ -148,6 +148,7 @@ class UserController extends Controller
         }
         $usuario = User::findOrFail($id);
         $usuario->delete();
+        Conta::registra("DELETE","users", $usuario);
         Conta::mensagem("success",'Usuário Excluído');
         return redirect()->back();
     }
