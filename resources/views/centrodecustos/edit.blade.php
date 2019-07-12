@@ -3,7 +3,7 @@
 @section('title', 'AdminLTE')
 
 @section('content_header')
-<h1>Editar Centro de Custos {{$centrodecusto->nome}}</h1>
+<h1>{{ $dadosPagina['titulo']}}</h1>
 
 <ol class="breadcrumb">
     <li><a href="/">Home</a></li>
@@ -52,5 +52,37 @@
                 </div>
         </div>
     </div>
+</div>
+<div class="row">
+    <col class="xs-12">
+        <div class="box box-primary">
+            @if (count($centrodecusto->conta) > 0)
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <h3 class="box-title">{{ $dadosPagina['tituloLista']}}</h3>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                              <th>ID</th>
+                              <th>Nome</th>
+                              <th>Descricao</th>
+                            </thead>
+                            <tbody>
+                                  @foreach ($centrodecusto->conta as $c)
+                                      
+                                  <tr>
+                                  <td>{{ $c->id}}</td>
+                                  <td><a href=" {{route($dadosPagina['rotaLista'] .  'edit',$c->id)}}">{{$c->nome}} </a></td>
+                                  <td>{{ $c->descricao}}</td>
+                                  </tr>
+                                  @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            @endif
+
+        </div>
 </div>
 @stop

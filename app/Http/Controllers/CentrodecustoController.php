@@ -108,9 +108,14 @@ class CentrodecustoController extends Controller
      */
     public function edit($id)
     {
+        $dadosPagina = [
+            'titulo'    => "Edição",
+            'tituloLista'    => "Contas Vinculadas",
+            'rota'      => "centrodecusto.",
+            'rotaLista' => "conta."
+        ];
         $centrodecusto = Centrodecusto::find($id);
-
-        return view('centrodecustos.edit',compact('centrodecusto'));
+        return view('centrodecustos.edit',compact('centrodecusto','dadosPagina'));
     }
 
     /**
@@ -139,8 +144,7 @@ class CentrodecustoController extends Controller
             return redirect()->back();
         }
 
-        $contas = Conta::where('centrodecusto_id', $id);
-        dd($contas);
+        $contas = Conta::where('centrodecusto_id', $id)->get();
         if (count($contas) > 0) {
             Conta::mensagem('danger','Existem contas vinculadas a esse centro de custo, exclua primeiro as contas vinculadas');
             return redirect()->back();
