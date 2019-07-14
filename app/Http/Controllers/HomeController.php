@@ -25,6 +25,17 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    public function indexPeriodo(Request $request)
+    {
+        //dd($request->input());
+        if(!$request->input)
+            return redirect(route('home'));
+        $this->dataIni = $request->input('dataIni');
+        $this->dataFim = $request->input('dataFim');
+
+        $this->index();
+
+    }
     public function index()
     {
         $dataIni = $this->dataIni ? $this->dataIni :  date('Y-m-01');
@@ -41,10 +52,13 @@ class HomeController extends Controller
         $classResult = $resultado > 0 ? 'bg-aqua' : 'bg-red';
 
         $dadosPagina = [
-            'titulo'            => 'Balanço',
+            'titulo'            => 'Início - Balanço',
             'classResultado'    => $classResult,
             'subtituloEsquerda' => 'Entradas',
             'subtituloDireita'  => 'Saídas',
+            'rota'              => 'home.',
+            'dataIni'           => $dataIni,
+            'dataFim'           => $dataFim,
         ];
 
         return view('home', compact('entradas', 'totalEntradas', 'saidas', 'totalSaidas', 'resultado', 'dadosPagina'));

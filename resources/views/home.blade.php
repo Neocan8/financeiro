@@ -3,7 +3,20 @@
 @section('title', 'AdminLTE')
 
 @section('content_header')
-    <h1>Início</h1>
+<div class="row">
+    <div class="col-xs-12 col-md-3">
+        <h1 style="margin-top: 0;">
+                {{$dadosPagina['titulo']}}                
+            </h1>
+        </div>
+        <div class="col-xs-12 col-md-6">
+        @include('includes.form-datas')
+        </div>
+    </div>
+
+    <ol class="breadcrumb">
+        <li><a href="#">Início</a></li>
+    </ol>
 @stop
 
 @section('content')
@@ -92,7 +105,7 @@
                 <div class="col-md-6">
                     <div class="box box-success">
                         <div class="box-header with-border">
-                            <h3 class="box-title">{{$dadosPagina['subtituloEsquerda']}}</h3>
+                            <h3 class="box-title">{{$dadosPagina['subtituloDireita']}}</h3>
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
