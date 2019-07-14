@@ -4,7 +4,7 @@ namespace App\Model;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Model\Centrodecusto;
 use Log;
 
@@ -37,10 +37,19 @@ class Conta extends Model
         return $this->hasMany('App\Model\historico');
     }
 
+    public static function contaAtiva($id)
+    {
+        $conta = Conta::find($id);
+        if(!$conta){
+            Conta::mensagem('danger', 'Esta conta está desativada, reative a conta ou escolha outra para prosseguir');
+            return false;
+        }
+        return true;
+    }
+
     public static function deposito($id,$valor)
     {
         $conta = Conta::find($id);
-        //dd($conta);
         if(!$conta){
             Conta::mensagem('danger','Conta Inexistente');
             return redirect()->back();

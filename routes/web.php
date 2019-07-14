@@ -37,10 +37,10 @@ Route::resource('/saida', 'SaidaController', ['names' => [
     'index' => 'saida.index'
 ]]);
 
-Route::post('/saida/periodo', 'saidaController@periodo')->name('saida.periodo');
-Route::get('/saida/rapida', 'saidaController@rapida')->name('saida.rapida'); 
-Route::get('/saida/pagar/{id}', 'saidaController@pagar')->name('saida.pagar'); 
-Route::get('/saida/estornar/{id}', 'saidaController@estornar')->name('saida.estornar'); 
+Route::post('/saida/periodo', 'SaidaController@periodo')->name('saida.periodo');
+Route::get('/saida/rapida', 'SaidaController@rapida')->name('saida.rapida'); 
+Route::get('/saida/pagar/{id}', 'SaidaController@pagar')->name('saida.pagar'); 
+Route::get('/saida/estornar/{id}', 'SaidaController@estornar')->name('saida.estornar'); 
 
 //TRANSFERENCIA
 

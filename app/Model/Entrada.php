@@ -19,4 +19,9 @@ class Entrada extends Model
         'conta_id', 'categoria_id', 'nome', 'descricao', 'valor', 'parcela', 'id_referencia', 'confirmado', 'data',  
     ];
 
+    public function conta()
+    {
+        return $this->belongsTo('App\Model\Conta');
+    }
+
 }

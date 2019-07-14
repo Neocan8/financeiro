@@ -35,7 +35,11 @@
                                   <option value="{{$c->id}}" 
                                     @if ($c->id == $dados->conta_id) 
                                       selected
-                                    @endif>
+                                    @endif
+                                    @if ($c->deleted_at != null)
+                                    disabled
+                                    @endif
+                                    >
                                   {{$c->nome}}</option>
                                  @endforeach
                               </select>

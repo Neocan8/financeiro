@@ -162,6 +162,10 @@ class SaidaController extends Controller
     public function edit($id)
     {
         $dados = Saida::findOrfail($id);
+
+        if(!Conta::contaAtiva($dado->conta_id))
+        return redirect()->back()->withInput();
+
         $outrasParcelas =  Saida::where('id_referencia', $dados->id_referencia)->get(); 
         // Mostra os somatórios nos rodapés titulos etc.
         $dadosPagina = [
@@ -171,7 +175,7 @@ class SaidaController extends Controller
             'rota'      => 'saida.'
         ];
 
-        $contas = Conta::all();
+        $contas = Conta::withTrashed()->get();
         $categorias = Categoria::where('tipo','S')->get();
 
        return view('transacoes.io-update', compact('dados','dadosPagina','contas','categorias', 'outrasParcelas'));
@@ -228,6 +232,11 @@ class SaidaController extends Controller
 
     function pagar($id) {
         $saida = Saida::find($id);
+
+        //VERIFICANDO SE A CONTA ESTÁ ATIVA
+        if(!Conta::contaAtiva($saida->conta_id))
+        return redirect()->back()->withInput();
+
         if($saida){
             $saida->confirmado = true;
             $saida->save();
@@ -242,6 +251,11 @@ class SaidaController extends Controller
     
     function estornar($id) {
         $saida = Saida::find($id);
+
+        //VERIFICANDO SE A CONTA ESTÁ ATIVA
+        if(!Conta::contaAtiva($saida->conta_id))
+        return redirect()->back()->withInput();
+  
         if($saida){
             $saida->confirmado = false;
             $saida->save();

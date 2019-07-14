@@ -109,7 +109,7 @@ class CentrodecustoController extends Controller
     public function edit($id)
     {
         $dadosPagina = [
-            'titulo'    => "Edição",
+            'titulo'    => "Centro de Custos - Edição",
             'tituloLista'    => "Contas Vinculadas",
             'rota'      => "centrodecusto.",
             'rotaLista' => "conta."

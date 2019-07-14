@@ -176,7 +176,7 @@ class EntradaController extends Controller
             'rota'      => 'entrada.'
         ];
 
-        $contas = Conta::all();
+        $contas = Conta::withTrashed()->get();
         $categorias = Categoria::where('tipo','E')->get();
 
        return view('transacoes.io-update', compact('dados','dadosPagina','contas','categorias', 'outrasParcelas'));
@@ -194,6 +194,13 @@ class EntradaController extends Controller
         $entrada = Entrada::find($id);
         if(!$entrada){
             Conta::mensagem('danger', 'Entrada não encontrada!');
+            return redirect( route('entrada.edit', $id));
+        }
+
+        //VERIFICANDO SE A CONTA EXISTE OU ESTÁ DESATIVADA
+
+        if(!Conta::find($request->input('conta_id'))){
+            Conta::mensagem('danger', 'A conta selecionada foi Excluída, por favor escolha outra conta para essa entrada.');
             return redirect( route('entrada.edit', $id));
         }
         
@@ -229,6 +236,11 @@ class EntradaController extends Controller
 
     function pagar($id) {
         $entrada = Entrada::find($id);
+        
+        // VERIFICANDO SE A CONTA ESTÁ ATIVA
+        if(!Conta::contaAtiva($entrada->conta_id))
+            return redirect()->back()->withInput();
+
         if($entrada){
             $entrada->confirmado = true;
             $entrada->save();
@@ -242,8 +254,13 @@ class EntradaController extends Controller
         
     }
 
+    // VERIFICANDO SE A CONTA ESTÁ ATIVA
     function estornar($id) {
         $entrada = Entrada::find($id);
+
+        if(!Conta::contaAtiva($entrada->conta_id))
+            return redirect()->back()->withInput();
+
         if($entrada){
             $entrada->confirmado = false;
             $entrada->save();
