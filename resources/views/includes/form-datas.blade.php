@@ -1,4 +1,4 @@
-<form action=" {{ route($dadosPagina['rota'] . "periodo")}}"  method="POST" class="form-inline">
+<form action=" {{ route($dadosPagina['rotaPeriodo'])}}"  method="POST" class="form-inline">
     @csrf
     <div class="form-group" style="margin-right: 15px;">
         <label for="dataIni">Início</label>

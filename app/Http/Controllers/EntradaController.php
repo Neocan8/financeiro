@@ -61,18 +61,19 @@ class EntradaController extends Controller
 
         // Mostra os somatórios nos rodapés titulos etc.
         $dadosPagina = [
-            'titulo' => 'Entradas',
+            'titulo'            => 'Entradas',
             'subtituloEsquerda' => 'Entradas a Receber',
-            'subtituloDireita' => 'Entradas Recebidas',
-            'caminho' => 'Entradas',
-            'totalAPagar' => $contasAPagar->sum('valor'),
-            'totalPagas' => $contasPagas->sum('valor'),
-            'restaPagar' => $contasAPagar->sum('valor') + $contasPagas->sum('valor') ,
-            'dataIni' =>$dataIni,
-            'dataFim' =>$dataFim,
-            'resta' => ' receber',
-            'alert-rodape' => 'alert-success',
-            'rota' => 'entrada.'
+            'subtituloDireita'  => 'Entradas Recebidas',
+            'caminho'           => 'Entradas',
+            'totalAPagar'       => $contasAPagar->sum('valor'),
+            'totalPagas'        => $contasPagas->sum('valor'),
+            'restaPagar'        => $contasAPagar->sum('valor') + $contasPagas->sum('valor') ,
+            'dataIni'           => $dataIni,
+            'dataFim'           => $dataFim,
+            'resta'             => ' receber',
+            'alert-rodape'      => 'alert-success',
+            'rota'              => 'entrada.',
+            'rotaPeriodo'       => 'entrada.periodo'
         ];
         
         
@@ -106,13 +107,13 @@ class EntradaController extends Controller
     {
         // Mostra os somatórios nos rodapés titulos etc.
         $dadosPagina = [
-            'titulo' => 'Nova Entrada',
-            'caminho' => 'Entradas',
-            'caminhoUrl' => route('entrada.index'),
+            'titulo'            => 'Nova Entrada',
+            'caminho'           => 'Entradas',
+            'caminhoUrl'        => route('entrada.index'),
             'subtituloEsquerda' => 'Entradas a Receber',
-            'subtituloDireita' => 'Entradas Recebidas',
-            'data' => date('Y-m-d'),
-            'rota' => 'entrada.'
+            'subtituloDireita'  => 'Entradas Recebidas',
+            'data'              => date('Y-m-d'),
+            'rota'              => 'entrada.'
         ];
         
         $contas = Conta::all();
@@ -170,10 +171,10 @@ class EntradaController extends Controller
         $outrasParcelas =  Entrada::where('id_referencia', $dados->id_referencia)->get(); 
         // Mostra os somatórios nos rodapés titulos etc.
         $dadosPagina = [
-            'titulo' => 'Editar Entrada',
-            'caminho' => 'Entrada',
-            'caminhoUrl' => route('entrada.index'),
-            'rota'      => 'entrada.'
+            'titulo'            => 'Editar Entrada',
+            'caminho'           => 'Entrada',
+            'caminhoUrl'        => route('entrada.index'),
+            'rota'              => 'entrada.'
         ];
 
         $contas = Conta::withTrashed()->get();

@@ -73,7 +73,8 @@ class SaidaController extends Controller
             'dataFim' =>$dataFim,
             'resta' => 'pagar',
             'alert-rodape' => 'alert-danger',
-            'rota' => 'saida.'
+            'rota' => 'saida.',
+            'rotaPeriodo'      => 'entrada.periodo'
         ];
         
         

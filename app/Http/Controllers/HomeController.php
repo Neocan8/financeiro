@@ -15,7 +15,8 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+     
+     public function __construct()
     {
         $this->middleware('auth');
     }
@@ -27,27 +28,44 @@ class HomeController extends Controller
      */
     public function indexPeriodo(Request $request)
     {
-        //dd($request->input());
-        if(!$request->input)
-            return redirect(route('home'));
+
         $this->dataIni = $request->input('dataIni');
         $this->dataFim = $request->input('dataFim');
 
         $this->index();
 
     }
-    public function index()
+    public function index(Request $request)
     {
-        $dataIni = $this->dataIni ? $this->dataIni :  date('Y-m-01');
-        $dataFim = $this->dataFim ? $this->dataFim :  date('Y-m-t');
+        
+        // SE TEM POST, COLOCA NA SESSION
+        if ($request->input('dataIni')) {
+            $request->session()->put('dataIni', $request->input('dataIni'));
+        }
+        if (!$request->session()->has('dataFim')) {
+            $request->session()->put('dataFim', $request->input('dataFim'));
+        }
+        
+        // SE AQUI NÃO TME SESSION NEM POST É O PRIMEIRO ACESSO
+        // COLOCANDO DATA INICIAL E FINAL PADRAO
+        if(!$request->session()->has('dataIni'))
+        $request->session()->put('dataIni', date('Y-m-01'));
+        
+        if($request->session()->has('dataFim'))
+        $request->session()->put('dataFim', date('Y-m-t'));
+        
+        $dataIni = $request->sessiom()->get('dataIni');
+        $dataFim = $request->sessiom()->get('dataFim$dataFim');
+        
+        
         $entradas = DB::table('entradas')
         ->whereBetween('data', [$dataIni,$dataFim])->get();
         $totalEntradas = $entradas->sum('valor');
-
+        
         $saidas = DB::table('saidas')
         ->whereBetween('data', [$dataIni,$dataFim])->get();
         $totalSaidas = $saidas->sum('valor');
-
+        
         $resultado = $totalEntradas - $totalSaidas;
         $classResult = $resultado > 0 ? 'bg-aqua' : 'bg-red';
 
@@ -56,11 +74,12 @@ class HomeController extends Controller
             'classResultado'    => $classResult,
             'subtituloEsquerda' => 'Entradas',
             'subtituloDireita'  => 'Saídas',
-            'rota'              => 'home.',
+            'rota'              => 'home',
+            'rotaPeriodo'       => 'home',
             'dataIni'           => $dataIni,
             'dataFim'           => $dataFim,
         ];
-
+        
         return view('home', compact('entradas', 'totalEntradas', 'saidas', 'totalSaidas', 'resultado', 'dadosPagina'));
     }
 }
