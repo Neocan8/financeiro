@@ -54,8 +54,8 @@ class HomeController extends Controller
         if($request->session()->has('dataFim'))
         $request->session()->put('dataFim', date('Y-m-t'));
         
-        $dataIni = $request->sessiom()->get('dataIni');
-        $dataFim = $request->sessiom()->get('dataFim$dataFim');
+        $dataIni = $request->session()->get('dataIni');
+        $dataFim = $request->session()->get('dataFim$dataFim');
         
         
         $entradas = DB::table('entradas')
