@@ -136,13 +136,6 @@ class ContaController extends Controller
     public function edit($id)
     {
         $conta = Conta::find($id);
-
-        // CASO A CONTA NÃO EXISTA OU TENHA SIDO DELETADA
-        if (!$conta) {
-            Conta::mensagem('danger','Está conta não existe ou está desativada');
-            return redirect( route('home'));
-        }
-
         $centrodecustos = Centrodecusto::all();
         return view('contas.editar', compact('conta','centrodecustos'));
 
